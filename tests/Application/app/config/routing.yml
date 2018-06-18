@@ -1,7 +1,5 @@
 sylius:
     resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
 
-# Put your own routes here
-
-acme_sylius_example_shop:
-    resource: "@AcmeSyliusExamplePlugin/Resources/config/app/shop_routing.yml"
+locastic_sylius_store_locator_plugin:
+    resource: "@SyliusCatalogPromotionPlugin/Resources/config/routing.yml"

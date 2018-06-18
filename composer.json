@@ -1,5 +1,5 @@
 {
-    "name": "locastoc/sylius-catalog-promotion-plugin",
+    "name": "locastic/sylius-catalog-promotion-plugin",
     "type": "sylius-plugin",
     "description": "Sylius plugin that allows you to create catalog promotions.",
     "license": "MIT",

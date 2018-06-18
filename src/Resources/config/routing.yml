@@ -1,0 +1,3 @@
+app_admin_catalog_promotion:
+    resource: 'routing/admin.yml'
+    prefix: 'admin'

@@ -1,0 +1,12 @@
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="locastic.sylius_catalog_promotion_plugin.form.type.catalog_promotion" class="Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionType">
+            <argument>%app.model.catalog_promotion.class%</argument>
+            <tag name="form.type" />
+        </service>
+        <service id="locastic.sylius_catalog_promotion_plugin.form.type.catalog_promotion_translation" class="Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionTranslationType">
+            <argument>%app.model.catalog_promotion_translation.class%</argument>
+            <tag name="form.type" />
+        </service>
+    </services>
+</container>
