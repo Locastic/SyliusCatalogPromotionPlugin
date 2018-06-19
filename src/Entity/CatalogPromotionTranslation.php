@@ -6,12 +6,9 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Sylius\Component\Resource\Model\AbstractTranslation;
 use Sylius\Component\Resource\Model\ResourceInterface;
-use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class CatalogPromotionTranslation extends AbstractTranslation implements ResourceInterface
 {
-    use TimestampableTrait;
-
     /** @var mixed */
     private $id;
 

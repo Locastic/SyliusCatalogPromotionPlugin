@@ -10,11 +10,12 @@ class AdminMenuListener
 {
     public function addAdminMenuItems(MenuBuilderEvent $event)
     {
-        $marketingMenu = $event->getMenu()->getChild('marketing');
-
-        $marketingMenu
-            ->addChild('catalog_promotions', ['route' => 'app_admin_catalog_promotion_index'])
-            ->setLabel('locastic_sylius_catalog_promotion_plugin.ui.admin.catalog');
+        $event->getMenu()
+            ->getChild('marketing')
+                ->addChild('catalog_promotions', [
+                    'route' => 'locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_index'
+                ])
+                ->setLabel('locastic_sylius_catalog_promotion_plugin.ui.admin.catalog');
     }
 }
 

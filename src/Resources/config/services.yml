@@ -7,5 +7,5 @@ services:
         tags:
             -
                 name: kernel.event_listener
-                admin: sylius.menu.shop.account
+                event: sylius.menu.admin.main
                 method: addAdminMenuItems

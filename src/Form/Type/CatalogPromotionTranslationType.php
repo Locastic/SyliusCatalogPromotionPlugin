@@ -23,6 +23,6 @@ class CatalogPromotionTranslationType extends AbstractResourceType
 
     public function getBlockPrefix()
     {
-        return 'app_catalog_promotion_translation';
+        return 'locastic_catalog_promotion_translation';
     }
 }

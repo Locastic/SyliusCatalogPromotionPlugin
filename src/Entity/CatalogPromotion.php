@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Timestampable\Traits\Timestampable;
-use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Resource\Model\CodeAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
@@ -16,7 +14,7 @@ use Sylius\Component\Resource\Model\TranslationInterface;
 
 class CatalogPromotion implements ResourceInterface, CodeAwareInterface, TranslatableInterface
 {
-    use Timestampable, TranslatableTrait {
+    use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
     }
 
@@ -27,7 +25,7 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
     private $code;
 
     /** @var int */
-    private $priority = 0;
+    private $position = 0;
 
     /** @var \DateTime */
     private $startsAt;
@@ -35,16 +33,17 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
     /** @var \DateTime */
     private $endsAt;
 
-    /**
-     * @var ChannelPricingInterface[]
-     */
+    /** @var ArrayCollection|ChannelInterface[] */
     private $channels;
+
+    /** @var ArrayCollection|CatalogPromotionGroup[] */
+    private $promotionGroups;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
-        $this->channels = new ArrayCollection();
         $this->initializeTranslationsCollection();
+        $this->channels = new ArrayCollection();
+        $this->promotionGroups = new ArrayCollection();
     }
 
     public function getId()
@@ -52,9 +51,19 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
         return $this->id;
     }
 
+    public function setPriority(?int $position): void
+    {
+        $this->position = $position;
+    }
+
     public function getPriority(): ?int
     {
-        return $this->priority;
+        return $this->position;
+    }
+
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
     }
 
     public function getCode(): ?string
@@ -62,14 +71,39 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
         return $this->code;
     }
 
+    public function setName(string $name): void
+    {
+        $this->getTranslation()->setName($name);
+    }
+
     public function getName(): ?string
     {
         return $this->getTranslation()->getName();
     }
 
+    public function setDescription(string $description): void
+    {
+        $this->getTranslation()->setDescription($description);
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->getTranslation()->getDescription();
+    }
+
+    public function setStartsAt(?\DateTime $startsAt): void
+    {
+        $this->startsAt = $startsAt;
+    }
+
     public function getStartsAt(): ?\DateTime
     {
         return $this->startsAt;
+    }
+
+    public function setEndsAt(?\DateTime $endsAt): void
+    {
+        $this->endsAt = $endsAt;
     }
 
     public function getEndsAt(): ?\DateTime
@@ -101,39 +135,28 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
         return $this->channels->contains($channel);
     }
 
-    public function getDescription(): ?string
+    public function getPromotionGroups(): ?ArrayCollection
     {
-        return $this->getTranslation()->getDescription();
+        return $this->promotionGroups;
     }
 
-    public function setCode(?string $code): void
+    public function addPromotionGroup(CatalogPromotionGroup $promotionGroup): void
     {
-        $this->code = $code;
+        if (!$this->hasPromotionGroup($promotionGroup)) {
+            $this->promotionGroups->add($promotionGroup);
+        }
     }
 
-    public function setName(string $name): void
+    public function removePromotionGroup(CatalogPromotionGroup $promotionGroup): void
     {
-        $this->getTranslation()->setName($name);
+        if ($this->hasPromotionGroup($promotionGroup)) {
+            $this->promotionGroups->removeElement($promotionGroup);
+        }
     }
 
-    public function setDescription(string $description): void
+    public function hasPromotionGroup(CatalogPromotionGroup $promotionGroup)
     {
-        $this->getTranslation()->setDescription($description);
-    }
-
-    public function setStartsAt(?\DateTime $startsAt): void
-    {
-        $this->startsAt = $startsAt;
-    }
-
-    public function setEndsAt(?\DateTime $endsAt): void
-    {
-        $this->endsAt = $endsAt;
-    }
-
-    public function setPriority(int $priority): void
-    {
-        $this->priority = $priority;
+        return $this->promotionGroups->contains($promotionGroup);
     }
 
     /**
