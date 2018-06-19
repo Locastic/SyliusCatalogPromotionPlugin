@@ -1,0 +1,11 @@
+imports:
+    - { resource: "services/forms.yml" }
+
+services:
+    sylius_catalog_promotion_plugin.menu.catalog:
+        class: Locastic\SyliusCatalogPromotionPlugin\Menu\AdminMenuListener
+        tags:
+            -
+                name: kernel.event_listener
+                admin: sylius.menu.shop.account
+                method: addAdminMenuItems

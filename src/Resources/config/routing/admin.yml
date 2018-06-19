@@ -1,4 +1,4 @@
-locastic_sylius_catalog_promotion_plugin_admin_catalog:
+locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion:
     resource: |
         alias: locastic_sylius_catalog_promotion_plugin.catalog_promotion
         section: admin

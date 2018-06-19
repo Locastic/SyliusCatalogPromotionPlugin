@@ -1,0 +1,10 @@
+services:
+    locastic.sylius_catalog_promotion_plugin.form.type.catalog_promotio:
+        class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionType
+        arguments: ['']
+        tags: { name: form.type }
+
+   locastic.sylius_catalog_promotion_plugin.form.type.catalog_promotion_translation:
+        class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionTranslationType
+        arguments: ['']
+        tags: { name: form.type }

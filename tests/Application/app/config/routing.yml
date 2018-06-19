@@ -2,4 +2,5 @@ sylius:
     resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
 
 locastic_sylius_store_locator_plugin:
-    resource: "@SyliusCatalogPromotionPlugin/Resources/config/routing.yml"
+    resource: "../../../../src/Resources/config/routing.yml"
+

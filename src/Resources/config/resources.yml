@@ -1,6 +1,6 @@
 sylius_resource:
     resources:
-        locastic.sylius_catalog_promotion_plugin.catalog_promotion:
+        locastic_sylius_catalog_promotion_plugin.catalog_promotion:
             driver: doctrine/orm
             classes:
                 model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion
