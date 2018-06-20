@@ -10,8 +10,8 @@
         </id>
 
         <field name="code" type="string" length="64" column="code" />
-        <field name="startsAt" type="boolean" length="64" column="starts_at" />
-        <field name="endsAt" type="boolean" column="ends_at" />
+        <field name="startsAt" type="datetime" column="starts_at" />
+        <field name="endsAt" type="datetime" column="ends_at" />
         <field name="position" type="integer">
             <gedmo:sortable-position />
         </field>

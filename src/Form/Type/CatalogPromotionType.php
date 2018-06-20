@@ -21,19 +21,19 @@ class CatalogPromotionType extends AbstractResourceType
                 'entry_type' => CatalogPromotionTranslationType::class,
             ])
             ->add('startsAt', DateTimeType::class, [
-                'label' => 'sylius.form.promotion.starts_at',
+                'label' => 'locastic_catalog_promotion.form.catalog_promotion.starts_at',
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
-                'required' => false,
+                'required' => true,
             ])
             ->add('endsAt', DateTimeType::class, [
-                'label' => 'sylius.form.promotion.ends_at',
+                'label' => 'locastic_catalog_promotion.form.catalog_promotion.ends_at',
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
-                'required' => false,
+                'required' => true,
             ])
             ->add('priority', IntegerType::class, [
-                'required' => false,
+                'required' => true,
                 'label' => 'locastic_catalog_promotion.form.catalog_promotion.position',
             ])
             ->add('channels', ChannelChoiceType::class, [
@@ -41,10 +41,6 @@ class CatalogPromotionType extends AbstractResourceType
                 'expanded' => true,
                 'label' => 'sylius.form.promotion.channels',
             ])
-//            ->add('promotionGroups', CatalogPromotionGroupCollectionType::class, [
-//                'entry_type' => CatalogPromotionType::class,
-//                'label' => 'sylius.form.promotion.rules',
-//            ])
             ->addEventSubscriber(new AddCodeFormSubscriber())
         ;
     }

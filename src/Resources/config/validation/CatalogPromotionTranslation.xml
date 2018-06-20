@@ -1,0 +1,13 @@
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+    <class name="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionTranslation">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>locastic</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

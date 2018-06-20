@@ -1,0 +1,43 @@
+sylius_grid:
+    grids:
+        locastic_sylius_catalog_promotion_plugin_catalog_promotion_group:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%locastic_sylius_catalog_promotion_plugin.model.catalog_promotion_group.class%"
+                    repository:
+                        method: createQueryBuilderByCatalogPromotionId
+                        arguments:
+                            catalogPromotionId: $catalogPromotionId
+            fields:
+                name:
+                    type: string
+                    label: locastic_sylius_catalog_promotion_plugin.ui.name
+                    sortable: ~
+            filters:
+                name:
+                    type: string
+                    label: locastic_sylius_catalog_promotion_plugin.ui.name
+            actions:
+                main:
+                    create:
+                        type: create
+                        options:
+                            link:
+                                parameters:
+                                    catalogPromotionId: $catalogPromotionId
+                item:
+                    update:
+                        type: update
+                        options:
+                            link:
+                                parameters:
+                                    id: resource.id
+                                    catalogPromotionId: $catalogPromotionId
+                    delete:
+                        type: delete
+                        options:
+                            link:
+                                parameters:
+                                    id: resource.id
+                                    catalogPromotionId: $catalogPromotionId

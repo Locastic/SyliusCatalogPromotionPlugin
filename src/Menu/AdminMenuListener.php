@@ -18,4 +18,3 @@ class AdminMenuListener
                 ->setLabel('locastic_sylius_catalog_promotion_plugin.ui.admin.catalog');
     }
 }
-

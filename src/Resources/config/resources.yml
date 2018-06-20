@@ -15,3 +15,4 @@ sylius_resource:
                   classes:
                       model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroup
                       form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionGroupType
+                      repository: Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionGroupRepository

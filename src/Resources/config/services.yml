@@ -2,10 +2,16 @@ imports:
     - { resource: "services/forms.yml" }
 
 services:
-    sylius_catalog_promotion_plugin.menu.catalog:
+    locastic_sylius_catalog_promotion_plugin.menu.catalog:
         class: Locastic\SyliusCatalogPromotionPlugin\Menu\AdminMenuListener
         tags:
             -
                 name: kernel.event_listener
                 event: sylius.menu.admin.main
                 method: addAdminMenuItems
+
+    locastic_sylius_catalog_promotion_plugin.custom_factory.catalog_promotion_group:
+        class: Locastic\SyliusCatalogPromotionPlugin\Factory\CatalogPromotionGroupFactory
+        public: false
+        decorates: locastic_sylius_catalog_promotion_plugin.factory.catalog_promotion_group
+        arguments: ['@locastic_sylius_catalog_promotion_plugin.custom_factory.catalog_promotion_group.inner']

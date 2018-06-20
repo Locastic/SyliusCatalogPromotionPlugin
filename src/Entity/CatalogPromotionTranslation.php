@@ -23,12 +23,12 @@ class CatalogPromotionTranslation extends AbstractTranslation implements Resourc
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -38,9 +38,8 @@ class CatalogPromotionTranslation extends AbstractTranslation implements Resourc
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 }
-

@@ -6,20 +6,19 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Sylius\Component\Core\Model\ProductVariantInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
 
-class CatalogPromotionGroup implements ResourceInterface
+class CatalogPromotionGroup implements CatalogPromotionGroupInterface
 {
     /** @var mixed */
     private $id;
 
     /** @var string */
-    private $type;
+    private $name;
 
     /** @var ProductVariantInterface[]|ArrayCollection[] */
     private $products;
 
-    /** @var CatalogPromotion */
+    /** @var CatalogPromotionInterface */
     private $catalog;
 
     public function __construct()
@@ -32,22 +31,22 @@ class CatalogPromotionGroup implements ResourceInterface
         return $this->id;
     }
 
-    public function getType(): string
+    public function getName(): ?string
     {
-        return $this->type;
+        return $this->name;
     }
 
-    public function setType(string $type): void
+    public function setName(?string $name): void
     {
-        $this->type = $type;
+        $this->name = $name;
     }
 
-    public function getCatalog(): CatalogPromotion
+    public function getCatalog(): CatalogPromotionInterface
     {
         return $this->catalog;
     }
 
-    public function setCatalog(?CatalogPromotion $catalog): void
+    public function setCatalog(?CatalogPromotionInterface $catalog): void
     {
         $this->catalog = $catalog;
     }

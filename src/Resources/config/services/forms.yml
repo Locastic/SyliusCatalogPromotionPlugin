@@ -3,7 +3,7 @@ services:
         class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionType
         arguments:
             - '%locastic_sylius_catalog_promotion_plugin.model.catalog_promotion.class%'
-            - ['sylius']
+            - ['locastic']
         tags:
             - { name: form.type }
 
@@ -11,7 +11,7 @@ services:
         class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionTranslationType
         arguments:
             - '%locastic_sylius_catalog_promotion_plugin.model.catalog_promotion_translation.class%'
-            - ['sylius']
+            - ['locastic']
         tags:
             - { name: form.type }
 
@@ -19,7 +19,7 @@ services:
         class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionGroupType
         arguments:
             - '%locastic_sylius_catalog_promotion_plugin.model.catalog_promotion_group.class%'
-            - ['sylius']
+            - ['locastic']
         tags:
             - { name: form.type }
 
@@ -27,6 +27,6 @@ services:
             class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionGroupCollectionType
             arguments:
                 - '%locastic_sylius_catalog_promotion_plugin.model.catalog_promotion_group.class%'
-                - ['sylius']
+                - ['locastic']
             tags:
                 - { name: form.type }

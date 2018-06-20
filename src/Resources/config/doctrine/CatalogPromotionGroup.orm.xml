@@ -8,7 +8,7 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="type" type="string" length="64" column="code" />
+        <field name="name" type="string" column="name" />
         <many-to-one field="catalog" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion" />
     </entity>
 </doctrine-mapping>

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Sylius\Component\Resource\Model\CodeAwareInterface;
-use Sylius\Component\Resource\Model\ResourceInterface;
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelInterface;
+use Sylius\Component\Resource\Model\CodeAwareInterface;
 use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 
-class CatalogPromotion implements ResourceInterface, CodeAwareInterface, TranslatableInterface
+class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface, TranslatableInterface
 {
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -36,7 +36,7 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
     /** @var ArrayCollection|ChannelInterface[] */
     private $channels;
 
-    /** @var ArrayCollection|CatalogPromotionGroup[] */
+    /** @var ArrayCollection|CatalogPromotionGroupInterface[] */
     private $promotionGroups;
 
     public function __construct()
@@ -111,7 +111,7 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
         return $this->endsAt;
     }
 
-    public function getChannels(): ?ArrayCollection
+    public function getChannels(): ?Collection
     {
         return $this->channels;
     }
@@ -135,26 +135,26 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
         return $this->channels->contains($channel);
     }
 
-    public function getPromotionGroups(): ?ArrayCollection
+    public function getPromotionGroups(): ?Collection
     {
         return $this->promotionGroups;
     }
 
-    public function addPromotionGroup(CatalogPromotionGroup $promotionGroup): void
+    public function addPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): void
     {
         if (!$this->hasPromotionGroup($promotionGroup)) {
             $this->promotionGroups->add($promotionGroup);
         }
     }
 
-    public function removePromotionGroup(CatalogPromotionGroup $promotionGroup): void
+    public function removePromotionGroup(CatalogPromotionGroupInterface $promotionGroup): void
     {
         if ($this->hasPromotionGroup($promotionGroup)) {
             $this->promotionGroups->removeElement($promotionGroup);
         }
     }
 
-    public function hasPromotionGroup(CatalogPromotionGroup $promotionGroup)
+    public function hasPromotionGroup(CatalogPromotionGroupInterface $promotionGroup)
     {
         return $this->promotionGroups->contains($promotionGroup);
     }
@@ -167,4 +167,3 @@ class CatalogPromotion implements ResourceInterface, CodeAwareInterface, Transla
         return new CatalogPromotionTranslation();
     }
 }
-

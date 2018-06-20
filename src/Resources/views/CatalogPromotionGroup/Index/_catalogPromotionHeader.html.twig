@@ -1,0 +1,8 @@
+{% import 'SyliusUiBundle:Macro:headers.html.twig' as headers %}
+
+<div class="column">
+    {{ headers.default(catalog_promotion.name,
+        configuration.vars.icon|default('tags'),
+        configuration.vars.subheader|default('locastic_sylius_catalog_promotion_plugin.ui.manage_catalog_promotion_groups')|trans)
+    }}
+</div>

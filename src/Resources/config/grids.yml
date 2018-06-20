@@ -1,21 +1,3 @@
-sylius_grid:
-    grids:
-        locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion:
-            driver:
-                name: doctrine/orm
-                options:
-                    class: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion
-            fields:
-                name:
-                    type: string
-                    label: sylius.ui.name
-                    sortable: translation.name
-            actions:
-                main:
-                    create:
-                        type: create
-                item:
-                    update:
-                        type: update
-                    delete:
-                        type: delete
+imports:
+    - { resource: "grids/catalog_promotion.yml" }
+    - { resource: "grids/catalog_promotion_coupon.yml" }
