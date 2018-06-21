@@ -4,7 +4,9 @@
     <class name="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion">
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
             <option name="fields">code</option>
-            <option name="groups">locastic</option>
+            <option name="groups">
+                <value>locastic</value>
+            </option>
         </constraint>
         <property name="code">
             <constraint name="NotBlank">
@@ -14,7 +16,9 @@
             </constraint>
             <constraint name="Regex">
                 <option name="pattern">/^[\w-]*$/</option>
-                <option name="groups">locastic</option>
+                <option name="groups">
+                    <value>locastic</value>
+                </option>
             </constraint>
         </property>
         <property name="startsAt">
@@ -32,11 +36,7 @@
             </constraint>
         </property>
         <property name="translations">
-            <constraint name="Valid">
-                <option name="groups">
-                    <value>locastic</value>
-                </option>
-            </constraint>
+            <constraint name="Valid"/>
         </property>
     </class>
 </constraint-mapping>

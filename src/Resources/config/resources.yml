@@ -16,3 +16,9 @@ sylius_resource:
                       model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroup
                       form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionGroupType
                       repository: Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionGroupRepository
+
+sylius_product:
+    resources:
+        product_variant:
+            classes:
+                model: Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariant

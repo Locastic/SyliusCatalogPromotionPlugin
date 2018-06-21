@@ -39,7 +39,7 @@ sylius_grid:
                 item:
                     promotion_groups:
                         type: links
-                        label: sylius.ui.manage_promotion_groups
+                        label: locastic_sylius_catalog_promotion_plugin.ui.manage_catalog_groups
                         options:
                             icon: ticket
                             links:
