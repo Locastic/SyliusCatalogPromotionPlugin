@@ -1,0 +1,13 @@
+{% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{#{% set breadcrumbs = [#}
+    {#{ label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },#}
+    {#{ label: 'locastic_catalog_promotion_plugin.ui.catalog_promotions'|trans, url: path('locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_index') },#}
+{##}
+    {#{ label: 'locastic_catalog_promotion_plugin.ui.catalog_promotions_groups'|trans },#}
+{#]#}
+{#%}#}
+{#{ label: catalogPromotion.code, url: path('locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_show', {'id': catalogPromotion.id}) },#}
+
+
+{#{{ breadcrumb.crumble(breadcrumbs) }}#}

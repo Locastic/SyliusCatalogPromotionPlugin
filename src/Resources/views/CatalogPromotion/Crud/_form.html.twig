@@ -1,0 +1,26 @@
+{% from '@SyliusAdmin/Macro/translationForm.html.twig' import translationForm %}
+
+<div class="ui two column stackable grid">
+    <div class="column">
+        {{ form_errors(form) }}
+        <div class="ui segment">
+            <div class="two fields">
+                {{ form_row(form.code) }}
+            </div>
+            {{ translationForm(form.translations) }}
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui two column stackable grid">
+            <div class="column">
+                {{ form_row(form.priority) }}
+                {{ form_row(form.channels) }}
+            </div>
+        </div>
+        <h4 class="ui dividing header">{{ 'sylius.ui.start_date'|trans }} & {{ 'sylius.ui.end_date'|trans }}</h4>
+        <div class="field">
+            {{ form_row(form.startsAt) }}
+            {{ form_row(form.endsAt) }}
+        </div>
+    </div>
+</div>

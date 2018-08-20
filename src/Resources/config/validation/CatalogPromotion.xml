@@ -1,0 +1,42 @@
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+    <class name="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">code</option>
+            <option name="groups">
+                <value>locastic</value>
+            </option>
+        </constraint>
+        <property name="code">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>locastic</value>
+                </option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="pattern">/^[\w-]*$/</option>
+                <option name="groups">
+                    <value>locastic</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="startsAt">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>locastic</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="endsAt">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>locastic</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="translations">
+            <constraint name="Valid"/>
+        </property>
+    </class>
+</constraint-mapping>

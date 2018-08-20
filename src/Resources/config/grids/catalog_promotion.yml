@@ -1,0 +1,61 @@
+sylius_grid:
+    grids:
+        locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion
+            sorting:
+                startsAt: desc
+            fields:
+                priority:
+                    type: twig
+                    label: sylius.ui.priority
+                    sortable: ~
+                    options:
+                        template: "@SyliusUi/Grid/Field/position.html.twig"
+                name:
+                    type: string
+                    label: sylius.ui.name
+                    sortable: translation.name
+                startsAt:
+                    type: datetime
+                    label: sylius.ui.startsAt
+                    sortable: startsAt
+                endsAt:
+                  type: datetime
+                  label: sylius.ui.endsAt
+                  sortable: endsAt
+            filters:
+                search:
+                    type: string
+                    label: sylius.ui.search
+                    options:
+                        fields: [code, name]
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    promotion_groups:
+                        type: links
+                        label: locastic_sylius_catalog_promotion_plugin.ui.manage_catalog_groups
+                        options:
+                            icon: ticket
+                            links:
+                                index:
+                                    label: locastic_sylius_catalog_promotion_plugin.ui.list_catalog_groups
+                                    icon: list
+                                    route: locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_index
+                                    parameters:
+                                        catalogPromotionId: resource.id
+                                create:
+                                    label: locastic_sylius_catalog_promotion_plugin.ui.create_catalog_group
+                                    icon: plus
+                                    route: locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_create
+                                    parameters:
+                                        catalogPromotionId: resource.id
+                    update:
+                        type: update
+                    delete:
+                        type: delete

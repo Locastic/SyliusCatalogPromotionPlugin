@@ -1,0 +1,24 @@
+sylius_resource:
+    resources:
+        locastic_sylius_catalog_promotion_plugin.catalog_promotion:
+            driver: doctrine/orm
+            classes:
+                model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion
+                form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionType
+            translation:
+                classes:
+                    model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionTranslation
+                    form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionTranslationType
+
+        locastic_sylius_catalog_promotion_plugin.catalog_promotion_group:
+                  driver: doctrine/orm
+                  classes:
+                      model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroup
+                      form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionGroupType
+                      repository: Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionGroupRepository
+
+sylius_product:
+    resources:
+        product_variant:
+            classes:
+                model: Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariant

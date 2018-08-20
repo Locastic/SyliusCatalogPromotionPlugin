@@ -1,2 +1,5 @@
+locastic_sylius_store_locator_plugin:
+    resource: "../../../../src/Resources/config/routing.yml"
+
 sylius:
     resource: "../../../../vendor/sylius/sylius/app/config/routing_dev.yml"

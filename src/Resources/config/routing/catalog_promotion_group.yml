@@ -1,0 +1,73 @@
+locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_index:
+    path: /{catalogPromotionId}/groups/
+    methods: [GET]
+    defaults:
+        _controller: locastic_sylius_catalog_promotion_plugin.controller.catalog_promotion_group:indexAction
+        _sylius:
+            template: "@SyliusCatalogPromotionPlugin/CatalogPromotionGroup/index.html.twig"
+            grid: locastic_sylius_catalog_promotion_plugin_catalog_promotion_group
+            section: admin
+            permission: true
+            vars:
+                route:
+                    parameters:
+                        catalogPromotionId: $catalogPromotionId
+                icon: tags
+                subheader: locastic_sylius_catalog_promotion_plugin.ui.manage_catalog_promotion_groups
+
+locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_create:
+    path: /{catalogPromotionId}/groups/new
+    methods: [GET, POST]
+    defaults:
+        _controller: locastic_sylius_catalog_promotion_plugin.controller.catalog_promotion_group:createAction
+        _sylius:
+            factory:
+                method: createForCatalogPromotion
+                arguments:
+                  - expr:notFoundOnNull(service('locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion').find($catalogPromotionId))
+            template: "@SyliusAdmin/Crud/create.html.twig"
+            grid: locastic_sylius_catalog_promotion_plugin_catalog_promotion_group
+            section: admin
+            redirect:
+                route: locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_index
+                parameters: { catalogPromotionId: $catalogPromotionId }
+            permission: true
+            vars:
+                route:
+                    parameters:
+                        catalogPromotionId: $catalogPromotionId
+                templates:
+                    header_title: "@SyliusCatalogPromotionPlugin/CatalogPromotionGroup/_header.html.twig"
+
+locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_update:
+    path: /groups/{id}/edit
+    methods: [GET, PUT]
+    defaults:
+        _controller: locastic_sylius_catalog_promotion_plugin.controller.catalog_promotion_group:updateAction
+        _sylius:
+            template: "@SyliusAdmin/Crud/update.html.twig"
+            grid: locastic_sylius_catalog_promotion_plugin_catalog_promotion_group
+            section: admin
+            redirect:
+                route: locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_index
+                parameters: { catalogPromotionId: $catalogPromotionId }
+            permission: true
+            vars:
+                route:
+                    parameters:
+                        id: $id
+                        catalogPromotionId: $catalogPromotionId
+                templates:
+                subheader: locastic_sylius_catalog_promotion_plugin.ui.manage_catalog_promotion_group
+
+locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_delete:
+    path: /groups/{id}
+    methods: [DELETE]
+    defaults:
+        _controller: locastic_sylius_catalog_promotion_plugin.controller.catalog_promotion_group:deleteAction
+        _sylius:
+            section: admin
+            redirect: referer
+            permission: true
+    requirements:
+        id: '\d+'

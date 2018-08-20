@@ -1,0 +1,5 @@
+{{ render(url('locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_partial_show', {
+    'id': app.request.attributes.get('catalogPromotionId'),
+    'template': '@SyliusCatalogPromotionPlugin/CatalogPromotionGroup/Index/_catalogPromotionHeader.html.twig',
+    'vars': configuration.vars
+})) }}

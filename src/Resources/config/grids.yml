@@ -1,0 +1,3 @@
+imports:
+    - { resource: "grids/catalog_promotion.yml" }
+    - { resource: "grids/catalog_promotion_group.yml" }
