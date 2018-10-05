@@ -15,3 +15,18 @@ services:
         public: false
         decorates: locastic_sylius_catalog_promotion_plugin.factory.catalog_promotion_group
         arguments: ['@locastic_sylius_catalog_promotion_plugin.custom_factory.catalog_promotion_group.inner']
+
+#checkers
+    locastic_sylius_catalog_promotion_plugin.promotion.checker.has_product_rule_checker:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\HasProductRuleChecker
+        tags:
+            -
+                name: locastic_sylius_catalog_promotion_plugin.rule_checker
+                type: has_product
+                label: Product is one of
+                form.type: Sylius\Bundle\CoreBundle\Form\Type\Promotion\Rule\ContainsProductConfigurationType
+
+#providers
+    locastic.sylius_catalog_promotion_plugin.provider.channel_pricing_provider:
+        class: Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider
+        arguments: ['@sylius.factory.channel_pricing']
