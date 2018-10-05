@@ -8,6 +8,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webmozart\Assert\Assert;
 
 class ChannelPricingProvider
 {
@@ -21,8 +22,10 @@ class ChannelPricingProvider
         $this->channelPricingFactory = $channelPricingFactory;
     }
 
-    public function getChannelPricingForProductVariant(ChannelInterface $channel, ProductVariantInterface $productVariant): ChannelPricingInterface
+    public function provideForProductVariant(ChannelInterface $channel, ProductVariantInterface $productVariant): ChannelPricingInterface
     {
+        Assert::notNull($productVariant->getChannelPricingForChannel($channel));
+
         /** @var ChannelPricingInterface $channelPricing */
         $channelPricing = $this->channelPricingFactory->createNew();
 
