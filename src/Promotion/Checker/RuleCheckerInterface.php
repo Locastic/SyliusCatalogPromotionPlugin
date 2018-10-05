@@ -1,10 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker;
 
-class RuleCheckerInterface
-{
+use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Promotion\Model\PromotionRule;
 
+interface RuleCheckerInterface
+{
+    /**
+     * @param ProductVariantInterface $productVariant
+     * @param array $configuration
+     *
+     * @return bool
+     */
+    public function isEligible(ProductVariantInterface $productVariant, PromotionRule $rule);
 }
