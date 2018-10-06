@@ -5,6 +5,7 @@ sylius_resource:
             classes:
                 model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion
                 form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionType
+                repository: Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository
             translation:
                 classes:
                     model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionTranslation

@@ -16,6 +16,12 @@ services:
         decorates: locastic_sylius_catalog_promotion_plugin.factory.catalog_promotion_group
         arguments: ['@locastic_sylius_catalog_promotion_plugin.custom_factory.catalog_promotion_group.inner']
 
+    locastic.sylius_catalog_promotion_plugin.promotion.processor.catalog_promotion_processor:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor\CatalogPromotionProcessor
+        arguments:
+            - '@locastic.sylius_catalog_promotion_plugin.provider.channel_pricing_provider'
+            - '@?'
+
 #checkers
     locastic_sylius_catalog_promotion_plugin.promotion.checker.has_product_rule_checker:
         class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\HasProductRuleChecker
@@ -30,3 +36,9 @@ services:
     locastic.sylius_catalog_promotion_plugin.provider.channel_pricing_provider:
         class: Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider
         arguments: ['@sylius.factory.channel_pricing']
+
+#commands
+    locastic.sylius_catalog_promotion_plugin.command.refresh_catalog_promotions_command:
+        class: Locastic\SyliusCatalogPromotionPlugin\Command\RefreshCatalogPromotionsCommand
+        tags:
+            - { name: console.command }
