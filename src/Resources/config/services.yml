@@ -21,16 +21,20 @@ services:
         arguments:
             - '@locastic_sylius_catalog_promotion_plugin.provider.channel_pricing_provider'
             - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
+            - '@locastic_sylius_catalog_promotion_plugin.promotion.checker.eligibility.catalog_promotion_eligibility_checker'
 
 #checkers
-    locastic_sylius_catalog_promotion_plugin.promotion.checker.has_product_rule_checker:
-        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\HasProductRuleChecker
+    locastic_sylius_catalog_promotion_plugin.promotion.checker.rule.has_product_rule_checker:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Rule\HasProductRuleChecker
         tags:
             -
                 name: locastic_sylius_catalog_promotion_plugin.rule_checker
                 type: has_product
                 label: Product is one of
                 form.type: Sylius\Bundle\CoreBundle\Form\Type\Promotion\Rule\ContainsProductConfigurationType
+
+    locastic_sylius_catalog_promotion_plugin.promotion.checker.eligibility.catalog_promotion_eligibility_checker:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Eligibility\CatalogPromotionEligibilityChecker
 
 #providers
     locastic_sylius_catalog_promotion_plugin.provider.channel_pricing_provider:

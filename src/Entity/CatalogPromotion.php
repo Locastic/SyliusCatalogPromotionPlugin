@@ -164,11 +164,6 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
         return $this->promotionGroups->contains($promotionGroup);
     }
 
-    public function getRules(): ?Collection
-    {
-        return $this->rules;
-    }
-
     public function addRule(CatalogPromotionRule $rule): void
     {
         $rule->setPromotion($this);
@@ -179,6 +174,11 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
     {
         $rule->setPromotion(null);
         $this->rules->removeElement($rule);
+    }
+
+    public function getRules(): ?Collection
+    {
+        return $this->rules;
     }
 
     /**

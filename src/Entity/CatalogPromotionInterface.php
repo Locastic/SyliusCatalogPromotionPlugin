@@ -111,4 +111,19 @@ interface CatalogPromotionInterface extends ResourceInterface
      * @return mixed
      */
     public function hasPromotionGroup(CatalogPromotionGroupInterface $promotionGroup);
+
+    /**
+     * @param CatalogPromotionRule $rule
+     */
+    public function addRule(CatalogPromotionRule $rule): void;
+
+    /**
+     * @param CatalogPromotionRule $rule
+     */
+    public function removeRule(CatalogPromotionRule $rule): void;
+
+    /**
+     * @return Collection|null
+     */
+    public function getRules(): ?Collection;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor;
 
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion;
+use Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Eligibility\CatalogPromotionEligibilityCheckerInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -12,22 +13,23 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 final class CatalogPromotionProcessor
 {
-    /**
-     * @var CatalogPromotionRepository
-     */
+    /** @var CatalogPromotionRepository  */
     private $promotionRepository;
 
-    /**
-     * @var ChannelPricingProvider
-     */
+    /** @var ChannelPricingProvider  */
     private $channelPricingProvider;
+
+    /** @var CatalogPromotionEligibilityCheckerInterface */
+    private $catalogPromotionEligibilityChecker;
 
     public function __construct(
         ChannelPricingProvider $channelPricingProvider,
-        CatalogPromotionRepository $promotionRepository
+        CatalogPromotionRepository $promotionRepository,
+        CatalogPromotionEligibilityCheckerInterface $catalogPromotionEligibilityChecker
     ) {
         $this->promotionRepository = $promotionRepository;
         $this->channelPricingProvider = $channelPricingProvider;
+        $this->catalogPromotionEligibilityChecker = $catalogPromotionEligibilityChecker;
     }
 
     public function process(/*ProductVariantInterface $productVariant,*/ ChannelInterface $channel)
@@ -36,7 +38,7 @@ final class CatalogPromotionProcessor
 
         /** @var CatalogPromotion $activeCatalogPromotion */
         foreach ($activeCatalogPromotions as $activeCatalogPromotion) {
-            if ($activeCatalogPromotion->)
+            if ($this->catalogPromotionEligibilityChecker->isEligible($activeCatalogPromotion))
 
         }
 dump($activeCatalogPromotions);

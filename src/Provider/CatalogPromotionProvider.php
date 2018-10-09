@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Provider;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariantInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
 
 class CatalogPromotionProvider
@@ -19,8 +23,23 @@ class CatalogPromotionProvider
         $this->catalogPromotionRepository = $catalogPromotionRepository;
     }
 
-    public function getActiveByChannel(): ArrayCollection
+    public function getCatalogProducts(CatalogPromotionInterface $catalogPromotion): Collection
     {
+        $catalogProducts = new ArrayCollection();
 
+        /** @var CatalogPromotionGroupInterface $catalogPromotionGroup */
+        foreach ($catalogPromotion->getPromotionGroups() as $catalogPromotionGroup) {
+            $this->getPromotionGroupProducts($catalogProducts, $catalogPromotionGroup);
+        }
+
+        return $catalogProducts;
+    }
+
+    private function getPromotionGroupProducts(Collection $catalogProducts, CatalogPromotionGroupInterface $catalogPromotionGroup)
+    {
+        /** @var ProductVariantInterface $product */
+        foreach ($catalogPromotionGroup->getProducts() as $product) {
+            $catalogProducts->add($product);
+        }
     }
 }
