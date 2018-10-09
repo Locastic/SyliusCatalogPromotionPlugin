@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Command;
 
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor\CatalogPromotionProcessor;
+use Sylius\Component\Channel\Context\ChannelContextInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,9 +17,15 @@ class RefreshCatalogPromotionsCommand extends Command
      */
     private $catalogPromotionProcessor;
 
-    public function __construct(CatalogPromotionProcessor $catalogPromotionProcessor)
+    /**
+     * @var ChannelContextInterface
+     */
+    private $channelContext;
+
+    public function __construct(CatalogPromotionProcessor $catalogPromotionProcessor, ChannelContextInterface $channelContext)
     {
         $this->catalogPromotionProcessor = $catalogPromotionProcessor;
+        $this->channelContext = $channelContext;
 
         parent::__construct();
     }
@@ -34,6 +41,8 @@ class RefreshCatalogPromotionsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->catalogPromotionProcessor->process();
+        $channel = $this->channelContext->getChannel();
+
+        $this->catalogPromotionProcessor->process($channel);
     }
 }

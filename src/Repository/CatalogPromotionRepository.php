@@ -14,10 +14,10 @@ class CatalogPromotionRepository extends EntityRepository
         return $this->createQueryBuilder('p')
             ->andWhere('p.startsAt IS NULL OR p.startsAt < :date')
             ->andWhere('p.endsAt IS NULL OR p.endsAt > :date')
-            ->andWhere(':channel IS MEMBER OF p.channels')
+            ->andWhere(':channel MEMBER OF p.channels')
             ->setParameter('date', new \DateTime())
             ->setParameter('channel', $channel)
-            ->addOrderBy('p.priority', 'DESC')
+            ->addOrderBy('p.position', 'DESC')
             ->getQuery()
             ->getResult()
             ;

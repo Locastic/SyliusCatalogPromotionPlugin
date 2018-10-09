@@ -35,11 +35,15 @@ services:
 #providers
     locastic_sylius_catalog_promotion_plugin.provider.channel_pricing_provider:
         class: Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider
-        arguments: ['@sylius.factory.channel_pricing']
+        arguments:
+            - '@sylius.factory.channel_pricing'
+            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
 
 #commands
     locastic_sylius_catalog_promotion_plugin.command.refresh_catalog_promotions_command:
         class: Locastic\SyliusCatalogPromotionPlugin\Command\RefreshCatalogPromotionsCommand
-        arguments: ['@locastic_sylius_catalog_promotion_plugin.promotion.processor.catalog_promotion_processor']
+        arguments:
+            - '@locastic_sylius_catalog_promotion_plugin.promotion.processor.catalog_promotion_processor'
+            - '@sylius.context.channel'
         tags:
             - { name: console.command }

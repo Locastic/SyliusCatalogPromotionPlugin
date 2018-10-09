@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker;
+namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Rule;
 
 use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Promotion\Model\PromotionRule;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor;
 
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -15,6 +16,7 @@ final class CatalogPromotionProcessor
      * @var CatalogPromotionRepository
      */
     private $promotionRepository;
+
     /**
      * @var ChannelPricingProvider
      */
@@ -28,12 +30,24 @@ final class CatalogPromotionProcessor
         $this->channelPricingProvider = $channelPricingProvider;
     }
 
-    public function process(ProductVariantInterface $productVariant, ChannelInterface $channel)
+    public function process(/*ProductVariantInterface $productVariant,*/ ChannelInterface $channel)
     {
-        $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
+        $activeCatalogPromotions = $this->promotionRepository->findActiveCatalogPromotionsByChannel($channel);
 
-        foreach ($this->promotionRepository->findActiveCatalogPromotionsByChannel($channel) as $catalogPromotion) {
-            dump($catalogPromotion);
+        /** @var CatalogPromotion $activeCatalogPromotion */
+        foreach ($activeCatalogPromotions as $activeCatalogPromotion) {
+            if ($activeCatalogPromotion->)
+
         }
+dump($activeCatalogPromotions);
+
+
+
+
+//        $productPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
+
+//        foreach ($this->promotionRepository->findActiveCatalogPromotionsByChannel($channel) as $catalogPromotion) {
+//            dump($catalogPromotion);
+//        }
     }
 }

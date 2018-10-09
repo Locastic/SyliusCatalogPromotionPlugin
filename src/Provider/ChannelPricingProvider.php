@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Provider;
 
+use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
@@ -16,14 +17,21 @@ class ChannelPricingProvider
      * @var FactoryInterface
      */
     private $channelPricingFactory;
+    /**
+     * @var CatalogPromotionRepository
+     */
+    private $catalogPromotionRepository;
 
-    public function __construct(FactoryInterface $channelPricingFactory)
+    public function __construct(FactoryInterface $channelPricingFactory, CatalogPromotionRepository $catalogPromotionRepository)
     {
         $this->channelPricingFactory = $channelPricingFactory;
+        $this->catalogPromotionRepository = $catalogPromotionRepository;
     }
 
     public function provideForProductVariant(ChannelInterface $channel, ProductVariantInterface $productVariant): ChannelPricingInterface
     {
+
+
         Assert::notNull($productVariant->getChannelPricingForChannel($channel));
 
         /** @var ChannelPricingInterface $channelPricing */
