@@ -13,5 +13,5 @@ interface CatalogPromotionEligibilityCheckerInterface
      *
      * @return bool
      */
-    public function isEligible(CatalogPromotionInterface $catalogPromotion): bool;
+    public function isEligible(CatalogPromotionInterface $catalogPromotion, ProductVariantInterface $productVariant): bool;
 }
