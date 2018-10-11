@@ -22,7 +22,7 @@ class CatalogPromotionApplicator implements CatalogPromotionApplicatorInterface
 
     public function apply(ChannelPricingInterface $channelPricing, CatalogPromotionInterface $catalogPromotion): void
     {
-        foreach ($catalogPromotion->)
+        foreach ($catalogPromotion-)
     }
 
     public function revert(ChannelPricingInterface $channelPricing, CatalogPromotionInterface $catalogPromotion): void

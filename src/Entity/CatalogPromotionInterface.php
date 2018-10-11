@@ -70,6 +70,8 @@ interface CatalogPromotionInterface extends ResourceInterface
      */
     public function getEndsAt(): ?\DateTime;
 
+    public function get()
+
     /**
      * @return Collection|null
      */

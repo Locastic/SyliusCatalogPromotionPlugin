@@ -42,6 +42,9 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
     /** @var ArrayCollection|CatalogPromotionRule[]  */
     private $rules;
 
+    /** @var ArrayCollection|PromotionActionInterface[] */
+    private $actions;
+
 
     public function __construct()
     {
@@ -49,6 +52,7 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
         $this->channels = new ArrayCollection();
         $this->promotionGroups = new ArrayCollection();
         $this->rules = new ArrayCollection();
+        $this->actions = new ArrayCollection();
     }
 
     public function getId()
@@ -179,6 +183,37 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
     public function getRules(): ?Collection
     {
         return $this->rules;
+    }
+
+    public function getActions(): ArrayCollection
+    {
+        return $this->actions;
+    }
+
+    public function hasActions(): bool
+    {
+       return !$this->actions->isEmpty();
+    }
+
+    public function hasAction(PromotionActionInterface $promotionAction): bool
+    {
+        return $this->actions->contains($promotionAction);
+    }
+
+    public function addAction(PromotionActionInterface $promotionAction): void
+    {
+        if (!$this->hasAction($promotionAction)) {
+            $this->actions->add($promotionAction);
+            $promotionAction->setPromotion($this);
+        }
+    }
+
+    public function removeAction(PromotionActionInterface $promotionAction): void
+    {
+        if ($this->hasAction($promotionAction)) {
+            $this->actions->removeElement($promotionAction);
+            $promotionAction->setPromotion(null);
+        }
     }
 
     /**
