@@ -38,6 +38,10 @@ class CatalogPromotionGroupType extends AbstractResourceType
                 'multiple' => true,
                 'expanded' => true,
             ])
+            ->add('actions', PromotionActionCollectionType::class, [
+                'label' => 'locastic.form.promotion.actions',
+                'button_add_label' => 'locastic.form.catalog_promotion.add_action'
+            ])
         ;
 
         $builder->get('products')->addModelTransformer(new CollectionToArrayTransformer());
