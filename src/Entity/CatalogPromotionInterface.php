@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
@@ -70,7 +71,6 @@ interface CatalogPromotionInterface extends ResourceInterface
      */
     public function getEndsAt(): ?\DateTime;
 
-    public function get()
 
     /**
      * @return Collection|null
@@ -128,4 +128,31 @@ interface CatalogPromotionInterface extends ResourceInterface
      * @return Collection|null
      */
     public function getRules(): ?Collection;
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getActions(): Collection;
+
+    /**
+     * @return bool
+     */
+    public function hasActions(): bool;
+
+    /**
+     * @param PromotionActionInterface $promotionAction
+     * @return bool
+     */
+    public function hasAction(PromotionActionInterface $promotionAction): bool;
+
+    /**
+     * @param PromotionActionInterface $promotionAction
+     */
+    public function addAction(PromotionActionInterface $promotionAction): void;
+
+    /**
+     * @param PromotionActionInterface $promotionAction
+     */
+    public function removeAction(PromotionActionInterface $promotionAction): void;
+
 }

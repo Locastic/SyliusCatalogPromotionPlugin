@@ -43,6 +43,7 @@ services:
             - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
             - '@locastic_sylius_catalog_promotion_plugin.promotion.checker.eligibility.catalog_promotion_eligibility_checker'
             - '@locastic_sylius_catalog_promotion_plugin.provider.catalog_promotion_provider'
+            - '@locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator'
 
 #applicators
     locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator:

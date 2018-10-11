@@ -185,7 +185,7 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
         return $this->rules;
     }
 
-    public function getActions(): ArrayCollection
+    public function getActions(): Collection
     {
         return $this->actions;
     }
