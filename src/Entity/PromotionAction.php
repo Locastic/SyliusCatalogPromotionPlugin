@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class PromotionAction implements PromotionActionInterface
 {
     /**
@@ -22,9 +25,14 @@ class PromotionAction implements PromotionActionInterface
     private $configuration;
 
     /**
-     * @var CatalogPromotionInterface
+     * @var Collection|CatalogPromotionGroupInterface[]
      */
-    private $promotion;
+    private $catalogPromotionGroups;
+
+    public function __construct()
+    {
+        $this->catalogPromotionGroups = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -51,15 +59,29 @@ class PromotionAction implements PromotionActionInterface
         $this->configuration = $configuration;
     }
 
-    public function getPromotion(): ?CatalogPromotionInterface
+    public function getCatalogPromotionGroups(): Collection
     {
-        return $this->promotion;
+        return $this->catalogPromotionGroups;
     }
 
-    public function setPromotion(?CatalogPromotionInterface $promotion): void
+    public function hasCatalogPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): bool
     {
-        $this->promotion = $promotion;
+        return $this->catalogPromotionGroups->contains($promotionGroup);
     }
 
+    public function addCatalogPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): void
+    {
+        if (!$this->hasCatalogPromotionGroup($promotionGroup)) {
+            $this->catalogPromotionGroups->add($promotionGroup);
+            $promotionGroup->setAction($this);
+        }
+    }
 
+    public function removeCatalogPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): void
+    {
+        if ($this->hasCatalogPromotionGroup($promotionGroup)) {
+            $this->catalogPromotionGroups->removeElement($promotionGroup);
+            $promotionGroup->setAction(null);
+        }
+    }
 }

@@ -15,5 +15,6 @@
                 <cascade-all/>
             </cascade>
         </one-to-many>
+        <many-to-one field="action" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\PromotionAction" />
     </entity>
 </doctrine-mapping>

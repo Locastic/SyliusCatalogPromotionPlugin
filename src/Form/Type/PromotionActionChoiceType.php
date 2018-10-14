@@ -12,17 +12,22 @@ final class PromotionActionChoiceType extends AbstractType
 {
     private $actions;
 
-    public function __construct(array $actions)
+    public function __construct(/*array $actions = []*/)
     {
-        $this->actions = $actions;
+//        $this->actions = $actions;
+        $this->actions = [
+            'dis promo static',
+            'dis promo perca',
+        ];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefault([
-            'choices' => array_flip($this->actions)
+        $resolver->setDefaults([
+            'choices' => array_flip($this->actions),
         ]);
     }
+
 
     public function getParent()
     {

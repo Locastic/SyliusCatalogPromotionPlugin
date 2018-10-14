@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Core\Model\ProductVariantInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface CatalogPromotionGroupInterface extends ResourceInterface
@@ -25,4 +24,9 @@ interface CatalogPromotionGroupInterface extends ResourceInterface
     public function removeProduct(ProductVariantInterface $productVariant): void;
 
     public function hasProduct(ProductVariantInterface $productVariant);
+
+    public function getAction(): ?PromotionActionInterface;
+
+    public function setAction(?PromotionActionInterface $action): void;
+
 }

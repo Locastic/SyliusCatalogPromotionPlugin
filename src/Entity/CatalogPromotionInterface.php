@@ -128,31 +128,4 @@ interface CatalogPromotionInterface extends ResourceInterface
      * @return Collection|null
      */
     public function getRules(): ?Collection;
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getActions(): Collection;
-
-    /**
-     * @return bool
-     */
-    public function hasActions(): bool;
-
-    /**
-     * @param PromotionActionInterface $promotionAction
-     * @return bool
-     */
-    public function hasAction(PromotionActionInterface $promotionAction): bool;
-
-    /**
-     * @param PromotionActionInterface $promotionAction
-     */
-    public function addAction(PromotionActionInterface $promotionAction): void;
-
-    /**
-     * @param PromotionActionInterface $promotionAction
-     */
-    public function removeAction(PromotionActionInterface $promotionAction): void;
-
 }

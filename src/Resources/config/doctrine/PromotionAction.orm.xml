@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Locastic\SyliusCatalogPromotionPlugin\Entity\PromotionAction" table="locastic_promotion_action">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="type" type="string" />
+        <field name="configuration" type="array" />
+
+        <one-to-many field="promotionGroups" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroup" mapped-by="action" />
+    </entity>
+
+</doctrine-mapping>

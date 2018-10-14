@@ -2,6 +2,7 @@
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface PromotionActionInterface extends ResourceInterface
@@ -26,13 +27,12 @@ interface PromotionActionInterface extends ResourceInterface
      */
     public function setConfiguration(array $configuration): void;
 
-    /**
-     * @return CatalogPromotionInterface
-     */
-    public function getPromotion(): ?CatalogPromotionInterface;
+    public function getCatalogPromotionGroups(): Collection;
 
-    /**
-     * @param CatalogPromotionInterface|null $type
-     */
-    public function setPromotion(?CatalogPromotionInterface $type): void;
+    public function hasCatalogPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): bool;
+
+    public function addCatalogPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): void;
+
+    public function removeCatalogPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): void;
+
 }

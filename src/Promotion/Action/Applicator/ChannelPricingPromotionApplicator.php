@@ -10,6 +10,5 @@ class ChannelPricingPromotionApplicator implements ChannelPricingPromotionApplic
 {
     public function apply(ChannelPricingInterface $channelPricing, int $promotionAmount): void
     {
-
     }
 }

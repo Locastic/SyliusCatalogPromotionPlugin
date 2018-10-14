@@ -6,7 +6,7 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Core\Model\ProductVariantInterface;
+use Webmozart\Assert\Assert;
 
 class CatalogPromotionGroup implements CatalogPromotionGroupInterface
 {
@@ -21,6 +21,9 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
 
     /** @var CatalogPromotionInterface */
     private $catalog;
+
+    /** @var PromotionActionInterface */
+    private $action;
 
     public function __construct()
     {
@@ -79,5 +82,18 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     public function hasProduct(ProductVariantInterface $productVariant)
     {
         return $this->products->contains($productVariant);
+    }
+
+    public function getAction(): ?PromotionActionInterface
+    {
+        return $this->action;
+    }
+
+    public function setAction(?PromotionActionInterface $action): void
+    {
+        Assert::notNull($action);
+
+        $this->action = $action;
+        $action->addPromotionGroup($this);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor;
 
-use Sylius\Component\Core\Model\ChannelPricingInterface;
-use Sylius\Component\Promotion\Model\PromotionActionInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 
 interface ActionExecutorInterface
 {
-    public function execute(ChannelPricingInterface $channelPricing, PromotionActionInterface $action): void;
+    public function execute(ChannelPricingInterface $channelPricing, array $configuration, CatalogPromotionInterface $catalogPromotion): void;
 }

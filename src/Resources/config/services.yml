@@ -35,6 +35,10 @@ services:
             - Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\ActionExecutorInterface
             - action executor
 
+#form_registries
+    locastic_sylius_catalog_promotion_plugin.form_registry.promotion_action_executor:
+        class: Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
 #processor
     locastic_sylius_catalog_promotion_plugin.promotion.processor.catalog_promotion_processor:
         class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor\CatalogPromotionProcessor
@@ -75,3 +79,8 @@ services:
             - '@sylius.context.channel'
         tags:
             - { name: console.command }
+
+#action executors
+    locastic.sylius_catalog_promotion_plugin.promotion.action.executor.fixed_discount_promotion_action_executor:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\FixedDiscountPromotionActionExecutor
+        arguments: ['@?']
