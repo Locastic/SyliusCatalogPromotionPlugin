@@ -28,7 +28,7 @@ services:
     locastic.sylius_catalog_promotion_plugin.form.type.promotion_action_choice_type:
         class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionChoiceType
         arguments:
-#            - '%locastic_sylius_catalog_promotion_plugin.promotion_actions%'
+            - '%locastic_sylius_catalog_promotion_plugin.promotion_actions%'
         tags:
             - { name: form.type, alias: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionChoiceType }
 

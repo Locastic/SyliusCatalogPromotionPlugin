@@ -32,7 +32,7 @@ class ChannelPricingProvider
     {
 
 
-        Assert::notNull($productVariant->getChannelPricingForChannel($channel));
+        Assert::notNull($productVariant->getChannelPricingForChannel($channel), 'Product '.$productVariant->getName().' does not have channel pricing in '.$channel->getName().' channel.' );
 
         /** @var ChannelPricingInterface $channelPricing */
         $channelPricing = $this->channelPricingFactory->createNew();

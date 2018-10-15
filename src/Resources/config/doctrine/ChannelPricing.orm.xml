@@ -4,11 +4,10 @@
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
 
-    <mapped-superclass name="Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricing" table="sylius_channel_pricing">
+    <entity name="Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricing" table="sylius_channel_pricing">
 
-        <field name="catalogPromotions" column="price" type="integer"/>
-        <field name="catalogPromotionAmount" column="catalog_promotion_amount" type="integer"/>
+        <many-to-one field="appliedCatalogPromotion" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion" />
+        <field name="catalogPromotionAmount" column="catalog_promotion_amount" type="integer" nullable="false"/>
 
-
-        $catalogPromotions
-        $catalogPromotionAmount
+    </entity>
+</doctrine-mapping>

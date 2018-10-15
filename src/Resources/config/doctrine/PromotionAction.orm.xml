@@ -9,7 +9,7 @@
         <field name="type" type="string" />
         <field name="configuration" type="array" />
 
-        <one-to-many field="promotionGroups" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroup" mapped-by="action" />
+        <one-to-many field="catalogPromotionGroups" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroup" mapped-by="action" />
     </entity>
 
 </doctrine-mapping>

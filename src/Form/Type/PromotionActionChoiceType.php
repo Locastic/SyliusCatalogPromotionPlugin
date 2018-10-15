@@ -12,13 +12,9 @@ final class PromotionActionChoiceType extends AbstractType
 {
     private $actions;
 
-    public function __construct(/*array $actions = []*/)
+    public function __construct(array $actions = [])
     {
-//        $this->actions = $actions;
-        $this->actions = [
-            'dis promo static',
-            'dis promo perca',
-        ];
+        $this->actions = $actions;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

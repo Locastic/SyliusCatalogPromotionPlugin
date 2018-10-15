@@ -11,22 +11,29 @@ use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
 class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
 {
     /**
-     * @var Collection
+     * @var CatalogPromotionInterface
      */
-    private $appliedCatalogPromotions;
+    private $appliedCatalogPromotion;
 
     /**
      * @var int
      */
     private $catalogPromotionAmount = 0;
 
-    public function __construct()
-    {
-        $this->appliedCatalogPromotions = new ArrayCollection();
-    }
-
     public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoAmount): bool
     {
+        if (null === $this->appliedCatalogPromotion) {
+            $this->addCatalogPromotionAmount($promoAmount);
+            $this->appliedCatalogPromotion = $catalogPromotion;
+        }
+
+
+        if ($this->appliedCatalogPromotion->getPriority() < $catalogPromotion->getPriority()) {
+            $this->detachCatalogPromotionAction($promoAmount);
+            $this->appliedCatalogPromotion = null;
+        }
+
+
         if (!$this->appliedCatalogPromotions->contains($catalogPromotion)) {
             $this->addCatalogPromotionAmount($promoAmount);
             return true;
