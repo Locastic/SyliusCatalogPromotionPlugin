@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Form\Type;
 
+use Locastic\SyliusCatalogPromotionPlugin\Entity\PromotionActionInterface;
 use Sylius\Bundle\PromotionBundle\Form\Type\AbstractConfigurablePromotionElementType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 
 final class PromotionActionType extends AbstractConfigurablePromotionElementType
 {
@@ -19,7 +25,8 @@ final class PromotionActionType extends AbstractConfigurablePromotionElementType
                 'attr' => [
                     'data-form-collection' =>'update',
                 ],
-            ]);
+            ])
+        ;
     }
 
     public function getBlockPrefix()

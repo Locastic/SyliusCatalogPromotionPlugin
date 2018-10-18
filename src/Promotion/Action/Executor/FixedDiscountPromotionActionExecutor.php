@@ -23,7 +23,7 @@ class FixedDiscountPromotionActionExecutor implements ActionExecutorInterface
 
     public function execute(ChannelPricingInterface $channelPricing, array $configuration /*, PromotionActionInterface $action*/, CatalogPromotionInterface $catalogPromotion): void
     {
-dd($configuration);
+//dd($configuration);
 //$promoAmount ---- calculator?
         if (null === $this->appliedCatalogPromotion) {
             $channelPricing->applyCatalogPromotionAction($catalogPromotion, $promoAmount);

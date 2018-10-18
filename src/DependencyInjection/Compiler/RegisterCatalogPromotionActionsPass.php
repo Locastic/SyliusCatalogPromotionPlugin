@@ -32,7 +32,7 @@ class RegisterCatalogPromotionActionsPass implements CompilerPassInterface
                 throw new \InvalidArgumentException('Tagged promotion action `' . $id . '` needs to have `type`, `form_type` and `label` attributes.');
             }
 
-            $promotionActionTypeToLabelMap[$attributes[0]['type']] = $attributes[0]['type'];
+            $promotionActionTypeToLabelMap[$attributes[0]['type']] = $attributes[0]['label'];
             $promotionActionRegistry->addMethodCall('register', [$attributes[0]['type'], new Reference($id)]);
             $promotionActionFormRegistry->addMethodCall('add', [$attributes[0]['type'], 'default', $attributes[0]['form_type']]);
             /*?!??!?!?!!? */

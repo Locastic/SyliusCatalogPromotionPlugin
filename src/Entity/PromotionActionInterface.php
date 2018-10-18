@@ -20,7 +20,7 @@ interface PromotionActionInterface extends ResourceInterface
     /**
      * @return array
      */
-    public function getConfiguration(): array;
+    public function getConfiguration(): ?array;
 
     /**
      * @param array $configuration

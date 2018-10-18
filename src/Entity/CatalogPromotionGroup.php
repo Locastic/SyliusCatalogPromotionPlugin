@@ -84,16 +84,36 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
         return $this->products->contains($productVariant);
     }
 
+    public function getActions(): ?array
+    {
+        return array($this->getAction());
+    }
+
     public function getAction(): ?PromotionActionInterface
     {
         return $this->action;
     }
 
-    public function setAction(?PromotionActionInterface $action): void
+    public function setAction($action): void
     {
         Assert::notNull($action);
 
         $this->action = $action;
-        $action->addPromotionGroup($this);
+        $this->action->addCatalogPromotionGroup($this);
+    }
+//Uredi!! => parametar prima array prebaci u ono sta sam ostavia u interfejsu
+    public function setActions($actions): void
+    {
+//        if (!is_array($actions)) array($actions);
+//        $actionCollection = new ArrayCollection($actions);
+        /** @var PromotionActionInterface $action */
+        $action = $this->getActionFromMultipleEntry(new ArrayCollection($actions));
+//        $action = $actionCollection->first();
+        $this->setAction($action);
+    }
+
+    private function getActionFromMultipleEntry(Collection $actions)
+    {
+        return $actions->first();
     }
 }

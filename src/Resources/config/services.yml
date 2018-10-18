@@ -83,11 +83,10 @@ services:
 #action executors
     locastic.sylius_catalog_promotion_plugin.promotion.action.executor.fixed_discount_promotion_action_executor:
         class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\FixedDiscountPromotionActionExecutor
-#        arguments: ['@']
         tags:
-            - { name: locastic.catalog_promotion_action_executor, type: fixed_discount, label: Fixed discount, form_type: Sylius\Bundle\CoreBundle\Form\Type\Promotion\Action\ChannelBasedFixedDiscountConfigurationType}
+            - { name: locastic.catalog_promotion_action_executor, type: fixed_discount, label: Fixed discount, form_type: Sylius\Bundle\CoreBundle\Form\Type\Promotion\Action\ChannelBasedFixedDiscountConfigurationType }
 
     locastic.sylius_catalog_promotion_plugin.promotion.action.executor.percentage_discount_promotion_action_executor:
         class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\PercentageDiscountPromotionActionExecutor
         tags:
-            - { name: locastic.catalog_promotion_action_executor, type: percentage_discount, label: Percentage discount, form_type: Sylius\Bundle\PromotionBundle\Form\Type\Action\PercentageDiscountConfigurationType}
+            - { name: locastic.catalog_promotion_action_executor, type: percentage_discount, label: Percentage discount, form_type: Sylius\Bundle\PromotionBundle\Form\Type\Action\PercentageDiscountConfigurationType }

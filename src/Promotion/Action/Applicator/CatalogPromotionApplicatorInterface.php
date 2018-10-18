@@ -3,7 +3,7 @@
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator;
 
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
-use Sylius\Component\Core\Model\ChannelPricingInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 
 interface CatalogPromotionApplicatorInterface
 {

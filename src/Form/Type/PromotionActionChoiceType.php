@@ -6,6 +6,10 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PromotionActionChoiceType extends AbstractType
@@ -23,7 +27,6 @@ final class PromotionActionChoiceType extends AbstractType
             'choices' => array_flip($this->actions),
         ]);
     }
-
 
     public function getParent()
     {

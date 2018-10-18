@@ -49,7 +49,7 @@ class PromotionAction implements PromotionActionInterface
         $this->type = $type;
     }
 
-    public function getConfiguration(): array
+    public function getConfiguration(): ?array
     {
         return $this->configuration;
     }
@@ -73,7 +73,7 @@ class PromotionAction implements PromotionActionInterface
     {
         if (!$this->hasCatalogPromotionGroup($promotionGroup)) {
             $this->catalogPromotionGroups->add($promotionGroup);
-            $promotionGroup->setAction($this);
+//            $promotionGroup->setAction($this);
         }
     }
 

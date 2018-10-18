@@ -38,5 +38,12 @@ services:
             - '%locastic_sylius_catalog_promotion_plugin.model.promotion_action.class%'
             - ['locastic']
             - '@locastic_sylius_catalog_promotion_plugin.form_registry.promotion_action_executor'
+            - '@locastic_sylius_catalog_promotion_plugin.registry_promotion_action_executor'
         tags:
             - { name: form.type, alias: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionType }
+
+    locastic.sylius_catalog_promotion_plugin.form.type.promotion_action_collection_type:
+        class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionCollectionType
+        arguments: ['@locastic_sylius_catalog_promotion_plugin.registry_promotion_action_executor']
+        tags:
+            - { name: form.type, alias: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionCollectionType }

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator;
 
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\PromotionActionInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\ActionExecutorInterface;
-use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 
 class CatalogPromotionApplicator implements CatalogPromotionApplicatorInterface
@@ -24,8 +25,9 @@ class CatalogPromotionApplicator implements CatalogPromotionApplicatorInterface
 
     public function apply(ChannelPricingInterface $channelPricing, CatalogPromotionInterface $catalogPromotion): void
     {
-        /** @var PromotionActionInterface $action */
-        foreach ($catalogPromotion->getActions() as $action) {
+        /** @var CatalogPromotionGroupInterface $promotionGroup */
+        foreach ($catalogPromotion->getPromotionGroups()as $promotionGroup) {
+            $action = $promotionGroup->getAction();
             $this->getActionExecutor($action->getType())->execute($channelPricing, $action->getConfiguration() ,$catalogPromotion);
         }
     }

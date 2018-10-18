@@ -27,6 +27,6 @@ interface CatalogPromotionGroupInterface extends ResourceInterface
 
     public function getAction(): ?PromotionActionInterface;
 
-    public function setAction(?PromotionActionInterface $action): void;
+    public function setAction(/*?PromotionActionInterface */$action): void;
 
 }
