@@ -18,52 +18,56 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
     /**
      * @var int
      */
-    private $catalogPromotionAmount = 0;
+    private $catalogPromotionPrice = 0;
 
-    public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoAmount): bool
+    public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoDiscount): bool
     {
-        if (null === $this->appliedCatalogPromotion) {
-            $this->addCatalogPromotionAmount($promoAmount);
-            $this->appliedCatalogPromotion = $catalogPromotion;
+        if ($this->hasAppliedCatalogPromotion()) {
+            //Check if appliance has to be repeated if job tries to apply same catalog promo
+            if (($promoDiscount > $this->getPrice()) || ($catalogPromotion->getPriority() < $this->appliedCatalogPromotion->getPriority())) {
+                return false;
+            }
+
+            if (!$this->detachCatalogPromotionAction()) {
+                return false;
+            }
         }
 
+        $this->setCatalogPromotionPrice($this->getPrice() - $promoDiscount);
+        $this->appliedCatalogPromotion = $catalogPromotion;
 
-        if ($this->appliedCatalogPromotion->getPriority() < $catalogPromotion->getPriority()) {
-            $this->detachCatalogPromotionAction($promoAmount);
-            $this->appliedCatalogPromotion = null;
+        return true;
+    }
+
+    public function detachCatalogPromotionAction(): bool
+    {
+        if (is_null($this->appliedCatalogPromotion)) {
+            return false;
         }
 
+        $this->setCatalogPromotionPrice(0);
+        $this->appliedCatalogPromotion = null;
 
-        if (!$this->appliedCatalogPromotions->contains($catalogPromotion)) {
-            $this->addCatalogPromotionAmount($promoAmount);
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
-    public function detachCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoAmount): bool
+    public function getCatalogPromotionPrice(): int
     {
-        if ($this->appliedCatalogPromotions->contains($catalogPromotion)) {
-            $this->addCatalogPromotionAmount($promoAmount);
-            return true;
-        }
-
-        return false;
+        return $this->catalogPromotionPrice;
     }
 
-    public function getCatalogPromotionAmount(): int
+    public function setCatalogPromotionPrice(int $catalogPromoPrice): void
     {
-        return $this->catalogPromotionAmount;
+        $this->catalogPromotionPrice = $catalogPromoPrice;
     }
 
-    public function addCatalogPromotionAmount(int $catalogPromoAmount): bool
+    public function getPromotionDiscount()
     {
-        $this->catalogPromotionAmount += $catalogPromoAmount;
+        return $this->getPrice() - $this->getCatalogPromotionPrice();
     }
 
-    public function getPromotionSubjectTotal()
+    public function hasAppliedCatalogPromotion()
     {
-        return $this->getPrice() - $this->getCatalogPromotionAmount();
+        return (!is_null($this->appliedCatalogPromotion) || ($this->catalogPromotionPrice !== 0));
     }
 }

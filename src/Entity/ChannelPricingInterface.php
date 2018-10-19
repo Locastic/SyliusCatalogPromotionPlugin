@@ -8,10 +8,10 @@ interface ChannelPricingInterface extends BaseChannelPricingInterface
 {
     public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoAmount): bool;
 
-    public function detachCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoAmount): bool;
+    public function detachCatalogPromotionAction(): bool;
 
-    public function getCatalogPromotionAmount(): int;
+    public function getCatalogPromotionPrice(): int;
 
-    public function addCatalogPromotionAmount(int $catalogPromoAmount): bool;
+    public function setCatalogPromotionPrice(int $catalogPromoPrice): void;
 
 }

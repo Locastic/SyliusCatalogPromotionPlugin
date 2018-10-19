@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariantInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicatorInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Eligibility\CatalogPromotionEligibilityCheckerInterface;
@@ -13,7 +15,6 @@ use Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\ChannelPricingInterface;
 
 final class CatalogPromotionProcessor
 {
@@ -32,22 +33,30 @@ final class CatalogPromotionProcessor
     /** @var CatalogPromotionApplicatorInterface */
     private $promotionApplicator;
 
+    /**
+     * @var EntityManagerInterface
+     */
+    private $channelPricingManager;
+
     public function __construct(
         ChannelPricingProvider $channelPricingProvider,
         CatalogPromotionRepository $promotionRepository,
         CatalogPromotionEligibilityCheckerInterface $catalogPromotionEligibilityChecker,
         CatalogPromotionProvider $catalogPromotionProvider,
-        CatalogPromotionApplicatorInterface $promotionApplicator
+        CatalogPromotionApplicatorInterface $promotionApplicator,
+        EntityManagerInterface $channelPricingManager
     ) {
         $this->promotionRepository = $promotionRepository;
         $this->channelPricingProvider = $channelPricingProvider;
         $this->catalogPromotionEligibilityChecker = $catalogPromotionEligibilityChecker;
         $this->catalogPromotionProvider = $catalogPromotionProvider;
         $this->promotionApplicator = $promotionApplicator;
+        $this->channelPricingManager = $channelPricingManager;
     }
 
     public function process(/*ProductVariantInterface $productVariant,*/ ChannelInterface $channel)
     {
+//        $appliedCatalogPromotions = $this->promotionRepository->findAppliedCatalogPromotionsByChannel();
         $activeCatalogPromotions = $this->promotionRepository->findActiveCatalogPromotionsByChannel($channel);
 
         /** @var CatalogPromotion $activeCatalogPromotion */
@@ -60,6 +69,8 @@ final class CatalogPromotionProcessor
                 /** @var ChannelPricingInterface $channelPricing */
                 $channelPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
                 $this->promotionApplicator->apply($channelPricing, $activeCatalogPromotion);
+                $this->channelPricingManager->persist($channelPricing);
+                $this->channelPricingManager->flush();
 //                if ($this->catalogPromotionEligibilityChecker->isEligible($activeCatalogPromotion, $productVariant)) {
 //                    dump('ide apply na ovog');
 //                }

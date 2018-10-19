@@ -22,4 +22,10 @@ class CatalogPromotionRepository extends EntityRepository
             ->getResult()
             ;
     }
+
+    public function findAppliedCatalogPromotionsByChannel(ChannelInterface $channel)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere();
+    }
 }

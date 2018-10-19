@@ -7,7 +7,7 @@
     <entity name="Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricing" table="sylius_channel_pricing">
 
         <many-to-one field="appliedCatalogPromotion" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion" />
-        <field name="catalogPromotionAmount" column="catalog_promotion_amount" type="integer" nullable="false"/>
+        <field name="catalogPromotionPrice" column="catalog_promotion_price" type="integer" nullable="false"/>
 
     </entity>
 </doctrine-mapping>
