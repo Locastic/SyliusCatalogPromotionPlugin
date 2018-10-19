@@ -14,6 +14,7 @@ use Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Eligibility\CatalogP
 use Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
+use Locastic\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
 
 final class CatalogPromotionProcessor
@@ -38,13 +39,19 @@ final class CatalogPromotionProcessor
      */
     private $channelPricingManager;
 
+    /**
+     * @var ChannelPricingRepository
+     */
+    private $channelPricingRepository;
+
     public function __construct(
         ChannelPricingProvider $channelPricingProvider,
         CatalogPromotionRepository $promotionRepository,
         CatalogPromotionEligibilityCheckerInterface $catalogPromotionEligibilityChecker,
         CatalogPromotionProvider $catalogPromotionProvider,
         CatalogPromotionApplicatorInterface $promotionApplicator,
-        EntityManagerInterface $channelPricingManager
+        EntityManagerInterface $channelPricingManager,
+        ChannelPricingRepository $channelPricingRepository
     ) {
         $this->promotionRepository = $promotionRepository;
         $this->channelPricingProvider = $channelPricingProvider;
@@ -52,12 +59,32 @@ final class CatalogPromotionProcessor
         $this->catalogPromotionProvider = $catalogPromotionProvider;
         $this->promotionApplicator = $promotionApplicator;
         $this->channelPricingManager = $channelPricingManager;
+        $this->channelPricingRepository = $channelPricingRepository;
     }
 
-    public function process(/*ProductVariantInterface $productVariant,*/ ChannelInterface $channel)
+    public function process(ChannelInterface $channel)
     {
-//        $appliedCatalogPromotions = $this->promotionRepository->findAppliedCatalogPromotionsByChannel();
+        $promotedChannelPricings = $this->channelPricingRepository->findAllWithAppliedCatalogPromotionsByChannel($channel);
+        $this->deactivateCatalogPromotions($promotedChannelPricings);
+
         $activeCatalogPromotions = $this->promotionRepository->findActiveCatalogPromotionsByChannel($channel);
+        $this->activateCatalogPromotions($channel, $activeCatalogPromotions);
+    }
+
+    public function deactivateCatalogPromotions(array $promotedChannelPricings)
+    {
+
+        /** @var ChannelPricingInterface $channelPricing */
+        foreach ($promotedChannelPricings as $channelPricing) {
+            $channelPricing->detachCatalogPromotionAction();
+            $this->channelPricingManager->persist($channelPricing);
+        }
+
+        $this->channelPricingManager->flush();
+    }
+
+    public function activateCatalogPromotions(ChannelInterface $channel, array $activeCatalogPromotions)
+    {
 
         /** @var CatalogPromotion $activeCatalogPromotion */
         foreach ($activeCatalogPromotions as $activeCatalogPromotion) {
@@ -69,27 +96,11 @@ final class CatalogPromotionProcessor
                 /** @var ChannelPricingInterface $channelPricing */
                 $channelPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
                 $this->promotionApplicator->apply($channelPricing, $activeCatalogPromotion);
+
                 $this->channelPricingManager->persist($channelPricing);
-                $this->channelPricingManager->flush();
-//                if ($this->catalogPromotionEligibilityChecker->isEligible($activeCatalogPromotion, $productVariant)) {
-//                    dump('ide apply na ovog');
-//                }
-
             });
-
         }
-dump($activeCatalogPromotions);
 
-
-//        $productPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
-
-//        foreach ($this->promotionRepository->findActiveCatalogPromotionsByChannel($channel) as $catalogPromotion) {
-//            dump($catalogPromotion);
-//        }
-    }
-
-    private function applyPromo(CatalogPromotion $catalogPromotion, Collection $catalogPromotionProducts)
-    {
-
+        $this->channelPricingManager->flush();
     }
 }

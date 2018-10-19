@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
 
 class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
@@ -24,7 +22,7 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
     {
         if ($this->hasAppliedCatalogPromotion()) {
             //Check if appliance has to be repeated if job tries to apply same catalog promo
-            if (($promoDiscount > $this->getPrice()) || ($catalogPromotion->getPriority() < $this->appliedCatalogPromotion->getPriority())) {
+            if (($catalogPromotion->getPriority() < $this->appliedCatalogPromotion->getPriority())) {
                 return false;
             }
 
@@ -33,7 +31,9 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
             }
         }
 
-        $this->setCatalogPromotionPrice($this->getPrice() - $promoDiscount);
+        $catalogPrice = $this->providePositiveDiscountedPriceOrZero($promoDiscount);
+
+        $this->setCatalogPromotionPrice($catalogPrice);
         $this->appliedCatalogPromotion = $catalogPromotion;
 
         return true;
@@ -69,5 +69,11 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
     public function hasAppliedCatalogPromotion()
     {
         return (!is_null($this->appliedCatalogPromotion) || ($this->catalogPromotionPrice !== 0));
+    }
+
+    private function providePositiveDiscountedPriceOrZero($promoDiscount)
+    {
+        return ($this->getPrice() - $promoDiscount >= 0) ? $this->getPrice() - $promoDiscount : 0;
+
     }
 }

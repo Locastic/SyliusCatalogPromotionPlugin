@@ -11,21 +11,26 @@ class CatalogPromotionRepository extends EntityRepository
 {
     public function findActiveCatalogPromotionsByChannel(ChannelInterface $channel)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.startsAt IS NULL OR p.startsAt < :date')
-            ->andWhere('p.endsAt IS NULL OR p.endsAt > :date')
-            ->andWhere(':channel MEMBER OF p.channels')
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->isNull('p.startsAt'),
+                        $qb->expr()->lt('p.startsAt', ':date')
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->isNull('p.endsAt'),
+                        $qb->expr()->gt('p.endsAt', ':date')
+                    ),
+                    $qb->expr()->isMemberOf(':channel', 'p.channels')
+                )
+            )
             ->setParameter('date', new \DateTime())
             ->setParameter('channel', $channel)
-            ->addOrderBy('p.position', 'DESC')
-            ->getQuery()
-            ->getResult()
-            ;
-    }
+        ;
 
-    public function findAppliedCatalogPromotionsByChannel(ChannelInterface $channel)
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere();
+        return $qb->getQuery()->getResult();
     }
 }
