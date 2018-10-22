@@ -14,4 +14,5 @@ interface ChannelPricingInterface extends BaseChannelPricingInterface
 
     public function setCatalogPromotionPrice(int $catalogPromoPrice): void;
 
+    public function getAppliedCatalogPromotion(): CatalogPromotionInterface;
 }

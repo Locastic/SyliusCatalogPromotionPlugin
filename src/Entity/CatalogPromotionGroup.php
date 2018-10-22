@@ -55,9 +55,6 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
         $this->catalog = $catalog;
     }
 
-    /**
-     * @return Collection|ProductVariantInterface[]|null
-     */
     public function getProducts(): ?Collection
     {
         return $this->products;
@@ -83,7 +80,7 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     {
         return $this->products->contains($productVariant);
     }
-
+//hack za formu - todo solve
     public function getActions(): ?array
     {
         return array($this->getAction());
@@ -101,14 +98,11 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
         $this->action = $action;
         $this->action->addCatalogPromotionGroup($this);
     }
-//Uredi!! => parametar prima array prebaci u ono sta sam ostavia u interfejsu
+//hack za formu - todo Uredi!! => parametar prima array prebaci u ono sta sam ostavia u interfejsu
     public function setActions($actions): void
     {
-//        if (!is_array($actions)) array($actions);
-//        $actionCollection = new ArrayCollection($actions);
         /** @var PromotionActionInterface $action */
         $action = $this->getActionFromMultipleEntry(new ArrayCollection($actions));
-//        $action = $actionCollection->first();
         $this->setAction($action);
     }
 

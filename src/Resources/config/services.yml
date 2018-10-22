@@ -79,6 +79,9 @@ services:
         arguments:
             - '@locastic_sylius_catalog_promotion_plugin.promotion.processor.catalog_promotion_processor'
             - '@sylius.context.channel'
+            - '@sylius.templating.helper.format_money'
+            - '@sylius.context.locale.composite'
+            - '@sylius.context.shopper'
         tags:
             - { name: console.command }
 

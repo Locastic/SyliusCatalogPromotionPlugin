@@ -16,14 +16,8 @@ class CatalogPromotionRepository extends EntityRepository
         $qb
             ->andWhere(
                 $qb->expr()->andX(
-                    $qb->expr()->orX(
-                        $qb->expr()->isNull('p.startsAt'),
-                        $qb->expr()->lt('p.startsAt', ':date')
-                    ),
-                    $qb->expr()->orX(
-                        $qb->expr()->isNull('p.endsAt'),
-                        $qb->expr()->gt('p.endsAt', ':date')
-                    ),
+                    $qb->expr()->lt('p.startsAt', ':date'),
+                    $qb->expr()->gt('p.endsAt', ':date'),
                     $qb->expr()->isMemberOf(':channel', 'p.channels')
                 )
             )

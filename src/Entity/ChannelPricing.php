@@ -22,7 +22,7 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
     {
         if ($this->hasAppliedCatalogPromotion()) {
             //Check if appliance has to be repeated if job tries to apply same catalog promo
-            if (($catalogPromotion->getPriority() < $this->appliedCatalogPromotion->getPriority())) {
+            if (!$this->hasHigherPriorityThenPreviouslyApplied($catalogPromotion)) {
                 return false;
             }
 
@@ -66,6 +66,11 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
         return $this->getPrice() - $this->getCatalogPromotionPrice();
     }
 
+    public function getAppliedCatalogPromotion(): CatalogPromotionInterface
+    {
+        return $this->appliedCatalogPromotion;
+    }
+
     public function hasAppliedCatalogPromotion()
     {
         return (!is_null($this->appliedCatalogPromotion) || ($this->catalogPromotionPrice !== 0));
@@ -75,5 +80,10 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
     {
         return ($this->getPrice() - $promoDiscount >= 0) ? $this->getPrice() - $promoDiscount : 0;
 
+    }
+
+    private function hasHigherPriorityThenPreviouslyApplied(CatalogPromotionInterface $catalogPromotion)
+    {
+        return ($catalogPromotion->getPriority() < $this->appliedCatalogPromotion->getPriority());
     }
 }

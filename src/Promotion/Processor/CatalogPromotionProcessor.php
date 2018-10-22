@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariantInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicatorInterface;
@@ -34,15 +34,14 @@ final class CatalogPromotionProcessor
     /** @var CatalogPromotionApplicatorInterface */
     private $promotionApplicator;
 
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $channelPricingManager;
 
-    /**
-     * @var ChannelPricingRepository
-     */
+    /** @var ChannelPricingRepository */
     private $channelPricingRepository;
+
+    /** @var ArrayCollection */
+    private $activatedChannelPricings;
 
     public function __construct(
         ChannelPricingProvider $channelPricingProvider,
@@ -60,19 +59,12 @@ final class CatalogPromotionProcessor
         $this->promotionApplicator = $promotionApplicator;
         $this->channelPricingManager = $channelPricingManager;
         $this->channelPricingRepository = $channelPricingRepository;
+        $this->activatedChannelPricings = new ArrayCollection();
     }
 
-    public function process(ChannelInterface $channel)
+    public function deactivateCatalogPromotions(ChannelInterface $channel)
     {
         $promotedChannelPricings = $this->channelPricingRepository->findAllWithAppliedCatalogPromotionsByChannel($channel);
-        $this->deactivateCatalogPromotions($promotedChannelPricings);
-
-        $activeCatalogPromotions = $this->promotionRepository->findActiveCatalogPromotionsByChannel($channel);
-        $this->activateCatalogPromotions($channel, $activeCatalogPromotions);
-    }
-
-    public function deactivateCatalogPromotions(array $promotedChannelPricings)
-    {
 
         /** @var ChannelPricingInterface $channelPricing */
         foreach ($promotedChannelPricings as $channelPricing) {
@@ -83,24 +75,28 @@ final class CatalogPromotionProcessor
         $this->channelPricingManager->flush();
     }
 
-    public function activateCatalogPromotions(ChannelInterface $channel, array $activeCatalogPromotions)
+    public function activateCatalogPromotions(ChannelInterface $channel)
     {
+        $activationTriggeredCatalogPromotions = $this->promotionRepository->findActiveCatalogPromotionsByChannel($channel);
 
-        /** @var CatalogPromotion $activeCatalogPromotion */
-        foreach ($activeCatalogPromotions as $activeCatalogPromotion) {
+        /** @var ChannelPricingInterface $activationTriggeredCatalogPromotion */
+        foreach ($activationTriggeredCatalogPromotions as $activationTriggeredCatalogPromotion) {
 
             /** @var Collection $catalogPromotionProducts */
-            $catalogPromotionProducts = $this->catalogPromotionProvider->getCatalogProducts($activeCatalogPromotion);
+            $catalogPromotionProducts = $this->catalogPromotionProvider->getCatalogProducts($activationTriggeredCatalogPromotion);
 
-            $catalogPromotionProducts->map(function (ProductVariantInterface $productVariant) use ($activeCatalogPromotion, $channel) {
+            $catalogPromotionProducts->map(function (ProductVariantInterface $productVariant) use ($activationTriggeredCatalogPromotion, $channel) {
                 /** @var ChannelPricingInterface $channelPricing */
                 $channelPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
-                $this->promotionApplicator->apply($channelPricing, $activeCatalogPromotion);
+                $this->promotionApplicator->apply($channelPricing, $activationTriggeredCatalogPromotion);
 
+                $this->activatedChannelPricings->add($channelPricing);
                 $this->channelPricingManager->persist($channelPricing);
             });
         }
 
         $this->channelPricingManager->flush();
+
+        return $this->activatedChannelPricings;
     }
 }
