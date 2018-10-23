@@ -14,11 +14,9 @@ class FixedDiscountPromotionActionExecutor implements ActionExecutorInterface
     public function execute(ChannelPricingInterface $channelPricing, array $configuration, CatalogPromotionInterface $catalogPromotion): void
     {
         $channelCode = $configuration[$channelPricing->getChannelCode()] ?? null;
-
         if (null === $channelCode) {
             return;
         }
-
         $promoAmount = $channelCode['amount'];
 
         $channelPricing->applyCatalogPromotionAction($catalogPromotion, $promoAmount);

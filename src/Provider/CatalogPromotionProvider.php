@@ -18,34 +18,28 @@ class CatalogPromotionProvider
      */
     private $catalogPromotionRepository;
 
-    /**
-     * @var Collection
-     */
-    private $catalogProducts;
-
     public function __construct(CatalogPromotionRepository $catalogPromotionRepository)
     {
         $this->catalogPromotionRepository = $catalogPromotionRepository;
-        $this->catalogProducts = new ArrayCollection();
     }
 
     public function getCatalogProducts(CatalogPromotionInterface $catalogPromotion): Collection
     {
-        $this->catalogProducts->clear();
+        $catalogProducts = new ArrayCollection();
 
         /** @var CatalogPromotionGroupInterface $catalogPromotionGroup */
         foreach ($catalogPromotion->getPromotionGroups() as $catalogPromotionGroup) {
-            $this->getPromotionGroupProducts($catalogPromotionGroup);
+            $this->getPromotionGroupProducts($catalogPromotionGroup, $catalogProducts);
         }
 
-        return $this->catalogProducts;
+        return $catalogProducts;
     }
 
-    private function getPromotionGroupProducts( CatalogPromotionGroupInterface $catalogPromotionGroup)
+    private function getPromotionGroupProducts( CatalogPromotionGroupInterface $catalogPromotionGroup, Collection $catalogProducts)
     {
         /** @var ProductVariantInterface $product */
         foreach ($catalogPromotionGroup->getProducts() as $product) {
-            $this->catalogProducts->add($product);
+            $catalogProducts->add($product);
         }
     }
 }

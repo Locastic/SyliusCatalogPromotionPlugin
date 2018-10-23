@@ -27,7 +27,8 @@ class CatalogPromotionApplicator implements CatalogPromotionApplicatorInterface
     public function apply(ChannelPricingInterface $channelPricing, CatalogPromotionInterface $catalogPromotion): void
     {
         /** @var CatalogPromotionGroupInterface $promotionGroup */
-        foreach ($catalogPromotion->getPromotionGroups()as $promotionGroup) {
+        foreach ($catalogPromotion->getPromotionGroups() as $promotionGroup) {
+
             $action = $promotionGroup->getAction();
             $this->getActionExecutor($action->getType())->execute($channelPricing, $action->getConfiguration() ,$catalogPromotion);
         }

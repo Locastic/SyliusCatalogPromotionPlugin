@@ -79,7 +79,7 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
 
     private function providePositiveDiscountedPriceOrZero($promoDiscount)
     {
-        return ($this->getPrice() - $promoDiscount >= 0) ? $this->getPrice() - $promoDiscount : 0;
+        return ($this->getPrice() - $promoDiscount >= 0) ? ($this->getPrice() - $promoDiscount) : 0;
 
     }
 

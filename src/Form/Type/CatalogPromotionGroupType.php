@@ -36,7 +36,7 @@ class CatalogPromotionGroupType extends AbstractResourceType
         $builder
             ->add('name', TextType::class)
             ->add('products', ChoiceType::class, [
-                'choices' => $this->productVariantRepository->findBy([], [], 10),
+                'choices' => $this->productVariantRepository->findBy([], [], 100),
                 'choice_label' => function (ProductVariant $productVariant) {
                     return $productVariant;
                 },
