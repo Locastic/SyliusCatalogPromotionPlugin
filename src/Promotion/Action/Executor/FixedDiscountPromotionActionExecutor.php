@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor;
 
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\ChannelPricingPromotionApplicatorInterface;
@@ -11,7 +12,7 @@ use Sylius\Component\Promotion\Model\PromotionActionInterface;
 
 class FixedDiscountPromotionActionExecutor implements ActionExecutorInterface
 {
-    public function execute(ChannelPricingInterface $channelPricing, array $configuration, CatalogPromotionInterface $catalogPromotion): void
+    public function execute(ChannelPricingInterface $channelPricing, array $configuration, CatalogPromotionGroupInterface $promotionGroup): void
     {
         $channelCode = $configuration[$channelPricing->getChannelCode()] ?? null;
         if (null === $channelCode) {
@@ -19,6 +20,6 @@ class FixedDiscountPromotionActionExecutor implements ActionExecutorInterface
         }
         $promoAmount = $channelCode['amount'];
 
-        $channelPricing->applyCatalogPromotionAction($catalogPromotion, $promoAmount);
+        $channelPricing->applyCatalogPromotionAction($promotionGroup->getCatalog(), $promoAmount);
     }
 }

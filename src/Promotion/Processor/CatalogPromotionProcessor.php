@@ -7,6 +7,7 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariantInterface;
@@ -76,24 +77,31 @@ final class CatalogPromotionProcessor
 
         /** @var CatalogPromotionInterface $activationTriggeredCatalogPromotion */
         foreach ($activationTriggeredCatalogPromotions as $activationTriggeredCatalogPromotion) {
-            /** @var Collection $catalogPromotionProducts */
-            $catalogPromotionProducts = $this->catalogPromotionProvider->getCatalogProducts($activationTriggeredCatalogPromotion);
-
-            $this->promoteCatalogProducts($catalogPromotionProducts, $activationTriggeredCatalogPromotion, $channel);
+            $this->promoteCatalogGroups($activationTriggeredCatalogPromotion, $channel);
         }
         $this->channelPricingManager->flush();
 
         return $this->activatedChannelPricings;
     }
 
-    private function promoteCatalogProducts(Collection $catalogPromotionProducts, CatalogPromotionInterface $activationTriggeredCatalogPromotion, ChannelInterface $channel)
+    private function promoteCatalogGroups(CatalogPromotionInterface $catalogPromotion, ChannelInterface $channel)
+    {
+        /** @var CatalogPromotionGroupInterface $promotionGroup */
+        foreach ($catalogPromotion->getPromotionGroups() as $promotionGroup) {
+            $catalogPromoGroupProducts = $promotionGroup->getProducts();
+
+            $this->promoteCatalogGroupProducts($catalogPromoGroupProducts, $promotionGroup, $channel);
+        }
+    }
+
+    private function promoteCatalogGroupProducts(Collection $catalogPromotionProducts, CatalogPromotionGroupInterface $promotionGroup, ChannelInterface $channel)
     {
         /** @var ProductVariantInterface $product */
         foreach ($catalogPromotionProducts as $productVariant) {
             /** @var ChannelPricingInterface $channelPricing */
             $channelPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
 
-            $this->promotionApplicator->apply($channelPricing, $activationTriggeredCatalogPromotion);
+            $this->promotionApplicator->apply($channelPricing, $promotionGroup);
             $this->activatedChannelPricings->add($channelPricing);
             $this->channelPricingManager->persist($channelPricing);
         }

@@ -24,14 +24,10 @@ class CatalogPromotionApplicator implements CatalogPromotionApplicatorInterface
         $this->registry = $registry;
     }
 
-    public function apply(ChannelPricingInterface $channelPricing, CatalogPromotionInterface $catalogPromotion): void
+    public function apply(ChannelPricingInterface $channelPricing, CatalogPromotionGroupInterface $promotionGroup): void
     {
-        /** @var CatalogPromotionGroupInterface $promotionGroup */
-        foreach ($catalogPromotion->getPromotionGroups() as $promotionGroup) {
-
             $action = $promotionGroup->getAction();
-            $this->getActionExecutor($action->getType())->execute($channelPricing, $action->getConfiguration() ,$catalogPromotion);
-        }
+            $this->getActionExecutor($action->getType())->execute($channelPricing, $action->getConfiguration() ,$promotionGroup);
     }
 
     public function getActionExecutor(string $actionType): ActionExecutorInterface

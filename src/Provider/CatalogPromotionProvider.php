@@ -35,7 +35,7 @@ class CatalogPromotionProvider
         return $catalogProducts;
     }
 
-    private function getPromotionGroupProducts( CatalogPromotionGroupInterface $catalogPromotionGroup, Collection $catalogProducts)
+    public function getPromotionGroupProducts(CatalogPromotionGroupInterface $catalogPromotionGroup, Collection $catalogProducts)
     {
         /** @var ProductVariantInterface $product */
         foreach ($catalogPromotionGroup->getProducts() as $product) {

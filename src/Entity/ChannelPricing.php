@@ -67,7 +67,7 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
         return $this->getPrice() - $this->getCatalogPromotionPrice();
     }
 
-    public function getAppliedCatalogPromotion(): CatalogPromotionInterface
+    public function getAppliedCatalogPromotion(): ?CatalogPromotionInterface
     {
         return $this->appliedCatalogPromotion;
     }
@@ -85,6 +85,6 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
 
     private function hasHigherPriorityThenPreviouslyApplied(CatalogPromotionInterface $catalogPromotion)
     {
-        return ($catalogPromotion->getPriority() < $this->appliedCatalogPromotion->getPriority());
+        return ($catalogPromotion->getPriority() > $this->appliedCatalogPromotion->getPriority());
     }
 }
