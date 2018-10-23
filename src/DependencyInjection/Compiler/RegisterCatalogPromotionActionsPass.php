@@ -35,7 +35,6 @@ class RegisterCatalogPromotionActionsPass implements CompilerPassInterface
             $promotionActionTypeToLabelMap[$attributes[0]['type']] = $attributes[0]['label'];
             $promotionActionRegistry->addMethodCall('register', [$attributes[0]['type'], new Reference($id)]);
             $promotionActionFormRegistry->addMethodCall('add', [$attributes[0]['type'], 'default', $attributes[0]['form_type']]);
-            /*?!??!?!?!!? */
         }
 
         $container->setParameter('locastic_sylius_catalog_promotion_plugin.promotion_actions', $promotionActionTypeToLabelMap);

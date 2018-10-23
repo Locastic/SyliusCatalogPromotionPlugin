@@ -14,10 +14,7 @@ class PercentageDiscountPromotionActionExecutor implements ActionExecutorInterfa
     public function execute(ChannelPricingInterface $channelPricing, array $configuration, CatalogPromotionInterface $catalogPromotion): void
     {
         $promoAmount = $this->calculatePromotionAmount($channelPricing->getPrice(), $configuration['percentage']);
-        if (!$channelPricing->applyCatalogPromotionAction($catalogPromotion, $promoAmount)) {
-            //ispisi mozda
-            return;
-        };
+        $channelPricing->applyCatalogPromotionAction($catalogPromotion, $promoAmount);
     }
 
     private function calculatePromotionAmount(int $channelPrice, float $promoPercentage): int

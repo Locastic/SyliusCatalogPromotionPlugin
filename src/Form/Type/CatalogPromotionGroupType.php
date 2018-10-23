@@ -50,29 +50,6 @@ class CatalogPromotionGroupType extends AbstractResourceType
         ;
 
         $builder->get('products')->addModelTransformer(new CollectionToArrayTransformer());
-
-//        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-//            /** @var CatalogPromotionGroupInterface $promoGroup */
-//            $promoGroup = $event->getData();
-//
-//            $action = array($promoGroup->getAction());
-//            $promoGroup->setAction($action);
-//            $event->setData($promoGroup);
-////dd($promoGroup);
-//            $event->setData(
-//                array($event->getData())
-//            );
-//        });
-//        $builder->get('action')
-//            ->addModelTransformer(new CallbackTransformer(
-//                function ($actionToArray) {
-//                    return array($actionToArray);
-//                },
-//                function ($arrayToAction) {
-//                    return $arrayToAction[0];
-//                }
-//            ))
-//        ;
     }
 
     public function getBlockPrefix()

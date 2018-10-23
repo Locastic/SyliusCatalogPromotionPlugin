@@ -7,10 +7,10 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariantInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicatorInterface;
-use Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Eligibility\CatalogPromotionEligibilityCheckerInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
@@ -24,9 +24,6 @@ final class CatalogPromotionProcessor
 
     /** @var ChannelPricingProvider */
     private $channelPricingProvider;
-
-    /** @var CatalogPromotionEligibilityCheckerInterface */
-    private $catalogPromotionEligibilityChecker;
 
     /** @var CatalogPromotionProvider */
     private $catalogPromotionProvider;
@@ -46,7 +43,6 @@ final class CatalogPromotionProcessor
     public function __construct(
         ChannelPricingProvider $channelPricingProvider,
         CatalogPromotionRepository $promotionRepository,
-        CatalogPromotionEligibilityCheckerInterface $catalogPromotionEligibilityChecker,
         CatalogPromotionProvider $catalogPromotionProvider,
         CatalogPromotionApplicatorInterface $promotionApplicator,
         EntityManagerInterface $channelPricingManager,
@@ -54,7 +50,6 @@ final class CatalogPromotionProcessor
     ) {
         $this->promotionRepository = $promotionRepository;
         $this->channelPricingProvider = $channelPricingProvider;
-        $this->catalogPromotionEligibilityChecker = $catalogPromotionEligibilityChecker;
         $this->catalogPromotionProvider = $catalogPromotionProvider;
         $this->promotionApplicator = $promotionApplicator;
         $this->channelPricingManager = $channelPricingManager;
@@ -79,24 +74,29 @@ final class CatalogPromotionProcessor
     {
         $activationTriggeredCatalogPromotions = $this->promotionRepository->findActiveCatalogPromotionsByChannel($channel);
 
-        /** @var ChannelPricingInterface $activationTriggeredCatalogPromotion */
+        /** @var CatalogPromotionInterface $activationTriggeredCatalogPromotion */
         foreach ($activationTriggeredCatalogPromotions as $activationTriggeredCatalogPromotion) {
-
             /** @var Collection $catalogPromotionProducts */
             $catalogPromotionProducts = $this->catalogPromotionProvider->getCatalogProducts($activationTriggeredCatalogPromotion);
 
-            $catalogPromotionProducts->map(function (ProductVariantInterface $productVariant) use ($activationTriggeredCatalogPromotion, $channel) {
-                /** @var ChannelPricingInterface $channelPricing */
-                $channelPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
-                $this->promotionApplicator->apply($channelPricing, $activationTriggeredCatalogPromotion);
-
-                $this->activatedChannelPricings->add($channelPricing);
-                $this->channelPricingManager->persist($channelPricing);
-            });
+            $this->promoteCatalogProducts($catalogPromotionProducts, $activationTriggeredCatalogPromotion, $channel);
         }
 
         $this->channelPricingManager->flush();
 
         return $this->activatedChannelPricings;
+    }
+
+    private function promoteCatalogProducts(Collection $catalogPromotionProducts, CatalogPromotionInterface $activationTriggeredCatalogPromotion, ChannelInterface $channel)
+    {
+        /** @var ProductVariantInterface $product */
+        foreach ($catalogPromotionProducts as $productVariant) {
+            /** @var ChannelPricingInterface $channelPricing */
+            $channelPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
+
+            $this->promotionApplicator->apply($channelPricing, $activationTriggeredCatalogPromotion);
+            $this->activatedChannelPricings->add($channelPricing);
+            $this->channelPricingManager->persist($channelPricing);
+        }
     }
 }

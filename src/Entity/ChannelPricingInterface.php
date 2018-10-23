@@ -6,9 +6,9 @@ use Sylius\Component\Core\Model\ChannelPricingInterface as BaseChannelPricingInt
 
 interface ChannelPricingInterface extends BaseChannelPricingInterface
 {
-    public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoAmount): bool;
+    public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoAmount): void;
 
-    public function detachCatalogPromotionAction(): bool;
+    public function detachCatalogPromotionAction(): void;
 
     public function getCatalogPromotionPrice(): int;
 

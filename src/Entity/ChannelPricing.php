@@ -18,16 +18,16 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
      */
     private $catalogPromotionPrice = 0;
 
-    public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoDiscount): bool
+    public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoDiscount): void
     {
         if ($this->hasAppliedCatalogPromotion()) {
             //Check if appliance has to be repeated if job tries to apply same catalog promo
             if (!$this->hasHigherPriorityThenPreviouslyApplied($catalogPromotion)) {
-                return false;
+                return;
             }
 
             if (!$this->detachCatalogPromotionAction()) {
-                return false;
+                return;
             }
         }
 
@@ -36,19 +36,19 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
         $this->setCatalogPromotionPrice($catalogPrice);
         $this->appliedCatalogPromotion = $catalogPromotion;
 
-        return true;
+        return;
     }
 
-    public function detachCatalogPromotionAction(): bool
+    public function detachCatalogPromotionAction(): void
     {
         if (is_null($this->appliedCatalogPromotion)) {
-            return false;
+            return;
         }
 
         $this->setCatalogPromotionPrice(0);
         $this->appliedCatalogPromotion = null;
 
-        return true;
+        return;
     }
 
     public function getCatalogPromotionPrice(): int
@@ -71,7 +71,7 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
         return $this->appliedCatalogPromotion;
     }
 
-    public function hasAppliedCatalogPromotion()
+    public function hasAppliedCatalogPromotion(): bool
     {
         return (!is_null($this->appliedCatalogPromotion) || ($this->catalogPromotionPrice !== 0));
     }
