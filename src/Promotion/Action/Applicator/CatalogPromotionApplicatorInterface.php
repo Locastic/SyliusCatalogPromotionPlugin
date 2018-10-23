@@ -12,10 +12,4 @@ interface CatalogPromotionApplicatorInterface
      * @param CatalogPromotionInterface $catalogPromotion
      */
     public function apply(ChannelPricingInterface $channelPricing, CatalogPromotionInterface $catalogPromotion): void;
-
-    /**
-     * @param ChannelPricingInterface $channelPricing
-     * @param CatalogPromotionInterface $catalogPromotion
-     */
-    public function revert(ChannelPricingInterface $channelPricing, CatalogPromotionInterface $catalogPromotion): void;
 }

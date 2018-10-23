@@ -24,7 +24,7 @@ class RegisterCatalogPromotionActionsPass implements CompilerPassInterface
         /** @var Definition $promotionActionFormRegistry */
         $promotionActionFormRegistry = $container->getDefinition('locastic_sylius_catalog_promotion_plugin.form_registry.promotion_action_executor');
 
-        $promotionActionExecutorsTypeToLabelMap = [];
+        $promotionActionTypeToLabelMap = [];
         $taggedServiceActionExecutors = $container->findTaggedServiceIds('locastic.catalog_promotion_action_executor');
 
         foreach ($taggedServiceActionExecutors as $id => $attributes) {

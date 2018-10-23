@@ -33,11 +33,6 @@ class CatalogPromotionApplicator implements CatalogPromotionApplicatorInterface
         }
     }
 
-    public function revert(ChannelPricingInterface $channelPricing, CatalogPromotionInterface $catalogPromotion): void
-    {
-        // TODO: Implement revert() method.
-    }
-
     public function getActionExecutor(string $actionType): ActionExecutorInterface
     {
         return $this->registry->get($actionType);

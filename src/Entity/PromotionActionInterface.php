@@ -7,24 +7,12 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface PromotionActionInterface extends ResourceInterface
 {
-    /**
-     * @return string|null
-     */
     public function getType(): ?string;
 
-    /**
-     * @param null|string $type
-     */
     public function setType(?string $type): void;
 
-    /**
-     * @return array
-     */
     public function getConfiguration(): ?array;
 
-    /**
-     * @param array $configuration
-     */
     public function setConfiguration(array $configuration): void;
 
     public function getCatalogPromotionGroups(): Collection;
