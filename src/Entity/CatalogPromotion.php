@@ -25,7 +25,7 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
     private $code;
 
     /** @var int */
-    private $position = 0;
+    private $priority = 0;
 
     /** @var \DateTime */
     private $startsAt;
@@ -52,14 +52,14 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
         return $this->id;
     }
 
-    public function setPriority(?int $position): void
+    public function setPriority(?int $priority): void
     {
-        $this->position = $position;
+        $this->priority = $priority;
     }
 
     public function getPriority(): ?int
     {
-        return $this->position;
+        return $this->priority;
     }
 
     public function setCode(?string $code): void
