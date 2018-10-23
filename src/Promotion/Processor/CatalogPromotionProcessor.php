@@ -81,7 +81,6 @@ final class CatalogPromotionProcessor
 
             $this->promoteCatalogProducts($catalogPromotionProducts, $activationTriggeredCatalogPromotion, $channel);
         }
-
         $this->channelPricingManager->flush();
 
         return $this->activatedChannelPricings;

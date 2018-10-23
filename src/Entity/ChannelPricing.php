@@ -26,7 +26,8 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
                 return;
             }
 
-            if (!$this->detachCatalogPromotionAction()) {
+            $this->detachCatalogPromotionAction();
+            if (!$this->hasAppliedCatalogPromotion()) {
                 return;
             }
         }

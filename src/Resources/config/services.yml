@@ -45,7 +45,6 @@ services:
         arguments:
             - '@locastic_sylius_catalog_promotion_plugin.provider.channel_pricing_provider'
             - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
-            - '@locastic_sylius_catalog_promotion_plugin.promotion.checker.eligibility.catalog_promotion_eligibility_checker'
             - '@locastic_sylius_catalog_promotion_plugin.provider.catalog_promotion_provider'
             - '@locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator'
             - '@sylius.manager.channel_pricing'
@@ -56,22 +55,6 @@ services:
         class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicator
         arguments:
             - '@locastic_sylius_catalog_promotion_plugin.registry_promotion_action_executor'
-
-#checkers
-    locastic_sylius_catalog_promotion_plugin.promotion.checker.rule.has_product_rule_checker:
-        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Rule\HasProductRuleChecker
-        tags:
-            -
-                name: locastic_sylius_catalog_promotion_plugin.rule_checker
-                type: has_product
-                label: Product is one of
-                form.type: Sylius\Bundle\CoreBundle\Form\Type\Promotion\Rule\ContainsProductConfigurationType
-
-    locastic_sylius_catalog_promotion_plugin.promotion.checker.eligibility.catalog_promotion_eligibility_checker:
-        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Checker\Eligibility\CatalogPromotionEligibilityChecker
-        arguments:
-            - '@locastic_sylius_catalog_promotion_plugin.provider.catalog_promotion_provider'
-            - '@sylius.registry.shipping_calculator'
 
 #commands
     locastic_sylius_catalog_promotion_plugin.command.refresh_catalog_promotions_command:
