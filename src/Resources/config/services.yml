@@ -78,3 +78,14 @@ services:
         class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\PercentageDiscountPromotionActionExecutor
         tags:
             - { name: locastic.catalog_promotion_action_executor, type: percentage_discount, label: Percentage discount, form_type: Sylius\Bundle\PromotionBundle\Form\Type\Action\PercentageDiscountConfigurationType }
+
+#event_listener
+    locastic.sylius_catalog_promotion_plugin.listener.images_upload:
+        class: Sylius\Bundle\CoreBundle\EventListener\ImagesUploadListener
+        parent: sylius.listener.images_upload
+        autowire: true
+        autoconfigure: false
+        public: false
+        tags:
+            - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_create, method: uploadImages }
+            - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_update, method: uploadImages }

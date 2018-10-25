@@ -24,6 +24,12 @@ sylius_resource:
                 model: Locastic\SyliusCatalogPromotionPlugin\Entity\PromotionAction
                 form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionType
 
+        locastic_sylius_catalog_promotion_plugin.catalog_banner_image:
+            driver: doctrine/orm
+            classes:
+                model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogBannerImage
+                form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogBannerImageType
+
 sylius_product:
     resources:
         product_variant:

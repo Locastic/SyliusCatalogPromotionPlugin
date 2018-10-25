@@ -24,6 +24,15 @@ services:
             - "@sylius.repository.product_variant"
         tags:
             - { name: form.type }
+
+    locastic.sylius_catalog_promotion_plugin.form.type.catalog_banner_image_type:
+        class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogBannerImageType
+        arguments:
+            - '%locastic_sylius_catalog_promotion_plugin.model.catalog_banner_image.class%'
+            - ['locastic']
+        tags:
+            - { name: form.type }
+
 #promo actions
     locastic.sylius_catalog_promotion_plugin.form.type.promotion_action_choice_type:
         class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionChoiceType

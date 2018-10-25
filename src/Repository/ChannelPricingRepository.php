@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
 
 class ChannelPricingRepository extends EntityRepository

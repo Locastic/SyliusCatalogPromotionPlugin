@@ -8,6 +8,7 @@ use Sylius\Bundle\ChannelBundle\Form\Type\ChannelChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\EventSubscriber\AddCodeFormSubscriber;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Sylius\Bundle\ResourceBundle\Form\Type\ResourceTranslationsType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,6 +41,13 @@ class CatalogPromotionType extends AbstractResourceType
                 'multiple' => true,
                 'expanded' => true,
                 'label' => 'sylius.form.promotion.channels',
+            ])
+            ->add('images', CollectionType::class, [
+                'entry_type' => CatalogBannerImageType::class,
+                'allow_add' => false,
+                'allow_delete' => false,
+                'by_reference' => false,
+                'label' => 'locastic.form.catalog_banner_images'
             ])
             ->addEventSubscriber(new AddCodeFormSubscriber())
         ;
