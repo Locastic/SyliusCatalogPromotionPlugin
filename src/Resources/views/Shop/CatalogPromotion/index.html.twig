@@ -3,11 +3,43 @@
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 
 {% block content %}
+    <div class="ui three column column cards">
     {% for resource in resources %}
-        <div class="ui fluid card">
-            {% set imagePath = '/media/image/'~resource.images.first.path %}
-            <img class="ui image dimmable" src="{{ imagePath }}" alt="" height="150px">
-            <div class="content">{{ resource.translations.first.name }}</div>
+        <div class="ui card">
+            {#<div class="image">#}
+                {% set imagePath = '/media/image/'~resource.images.first.path %}
+            {#</div>#}
+            <a href="{{ path('locastic_sylius_catalog_promotion_plugin_show', {code: resource.code}) }}" class="blurring dimmable image">
+                <div class="ui dimmer transition hidden">
+                    <div class="content">
+                        <div class="center">
+                            <div class="ui inverted button">75%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <img src="{{ imagePath }}">
+            </a>
+            <div class="content">
+                    <a href="{{ path('locastic_sylius_catalog_promotion_plugin_show', {code: resource.code}) }}" class="header">
+                    {{ resource.translations.first.name }}
+                    </a>
+                {#<div class="meta">#}
+                    {#<a>{{ resource.code }}</a>#}
+                {#</div>#}
+                <div class="description">
+                    {{ resource.translations.first.description }}
+                </div>
+            </div>
+            <div class="extra content">
+                <span class="right floated">
+                    {{ resource.startsAt | date("m/d/Y") }} - {{ resource.endsAt | date("m/d/Y") }}
+                </span>
+                <span>
+                    - 75%
+                </span>
+            </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}
