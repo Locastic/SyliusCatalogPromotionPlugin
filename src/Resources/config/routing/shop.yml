@@ -1,0 +1,7 @@
+locastic_sylius_catalog_promotion_plugin_index:
+    path: /catalog-promotions
+    methods: [GET]
+    defaults:
+        _controller: locastic_sylius_catalog_promotion_plugin.controller.catalog_promotion:indexAction
+        _sylius:
+            template: '@SyliusCatalogPromotionPlugin/Shop/CatalogPromotion/index.html.twig'
