@@ -25,10 +25,10 @@
 
     <div class="content">
         <div>
-            Promo price: {{ money.format(productVariant.channelPricings.first.catalogPromotionPrice, 'USD') }}
+            Promo price: {{ money.format(productVariant.channelPricings.first.price, 'USD') }}
         </div>
         <div>
-            Original price: <s>{{ money.format(productVariant.channelPricings.first.price, 'USD') }}</s>
+            Original price: <s>{{ money.format(productVariant.channelPricings.first.preCatalogPrice, 'USD') }}</s>
         </div>
 
     </div>

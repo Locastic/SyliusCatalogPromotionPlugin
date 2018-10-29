@@ -119,8 +119,8 @@ class RefreshCatalogPromotionsCommand extends Command
             $table
                 ->addRow([
                     $channelPricing->getProductVariant()->getName(),
+                    $this->moneyHelper->formatAmount($channelPricing->getPreCatalogPrice(), $currencyCode, $localeCode),
                     $this->moneyHelper->formatAmount($channelPricing->getPrice(), $currencyCode, $localeCode),
-                    $this->moneyHelper->formatAmount($channelPricing->getCatalogPromotionPrice(), $currencyCode, $localeCode),
                     $channelPricing->getAppliedCatalogPromotion()->getName()
                 ]);
         }

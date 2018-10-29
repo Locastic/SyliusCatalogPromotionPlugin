@@ -18,7 +18,7 @@ class ChannelPricingRepository extends EntityRepository
             ->andWhere(
                 $qb->expr()->andX(
                     $qb->expr()->eq('o.channelCode', ':channelCode'),
-                    $qb->expr()->gt('o.catalogPromotionPrice', 0),
+//                    $qb->expr()->gt('o.catalogPromotionPrice', 0),
                     $qb->expr()->in(
                         'o.appliedCatalogPromotion',
                         $qb2->select('cp.id')
