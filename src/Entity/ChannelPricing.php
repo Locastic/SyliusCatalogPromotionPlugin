@@ -58,6 +58,8 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
         if ($this->hasAppliedCatalogPromotion()) {
             return $this->preCatalogPrice;
         }
+
+        return $this->price;
     }
 
     public function setPreCatalogPrice(int $price): void
@@ -70,6 +72,8 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
         if ($this->hasAppliedCatalogPromotion()) {
             return abs($this->getPrice() - $this->getPreCatalogPrice());
         }
+
+        return 0;
     }
 
     public function getAppliedCatalogPromotion(): ?CatalogPromotionInterface

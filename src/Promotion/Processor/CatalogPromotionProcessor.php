@@ -41,6 +41,9 @@ final class CatalogPromotionProcessor
     /** @var ArrayCollection */
     private $activatedChannelPricings;
 
+    /** @var ArrayCollection */
+    private $deactivatedChannelPricings;
+
     public function __construct(
         ChannelPricingProvider $channelPricingProvider,
         CatalogPromotionRepository $promotionRepository,
@@ -56,22 +59,33 @@ final class CatalogPromotionProcessor
         $this->channelPricingManager = $channelPricingManager;
         $this->channelPricingRepository = $channelPricingRepository;
         $this->activatedChannelPricings = new ArrayCollection();
+        $this->deactivatedChannelPricings = new ArrayCollection();
     }
 
-    public function deactivateCatalogPromotions(ChannelInterface $channel)
+    public function deactivateCatalogPromotions(ChannelInterface $channel): Collection
     {
         $promotedChannelPricings = $this->channelPricingRepository->findAllWithAppliedCatalogPromotionsByChannel($channel);
 
         /** @var ChannelPricingInterface $channelPricing */
         foreach ($promotedChannelPricings as $channelPricing) {
+            $catalogPrice = $channelPricing->getPrice();
+            $previouslyAppliedCatalog = $channelPricing->getAppliedCatalogPromotion();
+
             $channelPricing->detachCatalogPromotionAction();
             $this->channelPricingManager->persist($channelPricing);
-        }
 
+            $this->deactivatedChannelPricings->add([
+                $channelPricing,
+                $catalogPrice,
+                $previouslyAppliedCatalog
+            ]);
+        }
         $this->channelPricingManager->flush();
+
+        return $this->deactivatedChannelPricings;
     }
 
-    public function activateCatalogPromotions(ChannelInterface $channel)
+    public function activateCatalogPromotions(ChannelInterface $channel): Collection
     {
         $activationTriggeredCatalogPromotions = $this->promotionRepository->findActiveCatalogPromotionsByChannel($channel);
 
