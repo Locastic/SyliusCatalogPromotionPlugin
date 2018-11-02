@@ -180,7 +180,7 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
     public function getImagesByType(string $type): Collection
     {
         return $this->images->filter(function (ImageInterface $image) use ($type) {
-           return $type === $image->getType();
+            return $type === $image->getType();
         });
     }
 

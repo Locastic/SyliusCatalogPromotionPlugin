@@ -33,7 +33,7 @@ class ChannelPricingProvider
 
     public function provideForProductVariant(ChannelInterface $channel, ProductVariantInterface $productVariant): ChannelPricingInterface
     {
-        Assert::notNull($productVariant->getChannelPricingForChannel($channel), 'Product '.$productVariant->getName().' does not have channel pricing in '.$channel->getName().' channel.' );
+        Assert::notNull($productVariant->getChannelPricingForChannel($channel), 'Product '.$productVariant->getName().' does not have channel pricing in '.$channel->getName().' channel.');
 
         return $productVariant->getChannelPricingForChannel($channel);
     }

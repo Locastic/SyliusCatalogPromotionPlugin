@@ -80,7 +80,7 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     {
         return $this->products->contains($productVariant);
     }
-//hack za formu - todo solve
+    //hack za formu - todo solve
     public function getActions(): ?array
     {
         return array($this->getAction());
@@ -98,7 +98,7 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
         $this->action = $action;
         $this->action->addCatalogPromotionGroup($this);
     }
-//hack za formu - todo Uredi!! => parametar prima array prebaci u ono sta sam ostavia u interfejsu
+    //hack za formu - todo Uredi!! => parametar prima array prebaci u ono sta sam ostavia u interfejsu
     public function setActions($actions): void
     {
         /** @var PromotionActionInterface $action */

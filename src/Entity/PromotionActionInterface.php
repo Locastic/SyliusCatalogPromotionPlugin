@@ -22,5 +22,4 @@ interface PromotionActionInterface extends ResourceInterface
     public function addCatalogPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): void;
 
     public function removeCatalogPromotionGroup(CatalogPromotionGroupInterface $promotionGroup): void;
-
 }

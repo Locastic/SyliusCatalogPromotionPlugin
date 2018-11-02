@@ -48,4 +48,3 @@ class FixedDiscountConfigurationType
         return 'locastic_catalog_promotion_action_fixed_discount_configuration';
     }
 }
-

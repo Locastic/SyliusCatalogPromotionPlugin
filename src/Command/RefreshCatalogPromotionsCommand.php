@@ -93,7 +93,6 @@ class RefreshCatalogPromotionsCommand extends Command
         $activatedProducts = $this->catalogPromotionProcessor->activateCatalogPromotions($channel);
 
         $this->renderCatalogReport($output, $activatedProducts, 'activation');
-
     }
 
     private function renderCatalogReport(OutputInterface $output, Collection $subjects, string $commandType)
@@ -117,7 +116,6 @@ class RefreshCatalogPromotionsCommand extends Command
                 [$this, $commandArguments['method']],
                 [$table, $subject, $currencyCode, $localeCode]
             );
-
         }
 
         $table->render();
@@ -169,6 +167,5 @@ class RefreshCatalogPromotionsCommand extends Command
             'successMessage'        => 'Succesfully deactivated catalog promotions from the upper table.',
             'method'                => 'renderActivationTableRow',
         ];
-
     }
 }
