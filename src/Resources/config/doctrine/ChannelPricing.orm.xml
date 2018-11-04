@@ -1,0 +1,15 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+
+    <entity name="Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricing" table="sylius_channel_pricing">
+
+        <many-to-one field="appliedCatalogPromotion" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion">
+            <join-column name="applied_catalog_promotion" referenced-column-name="id"/>
+        </many-to-one>
+        <field name="preCatalogPrice" column="pre_catalog_price" type="integer" nullable="false"/>
+
+    </entity>
+</doctrine-mapping>

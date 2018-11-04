@@ -10,7 +10,7 @@ sylius_grid:
             fields:
                 priority:
                     type: twig
-                    label: sylius.ui.priority
+                    label: sylius.ui.position
                     sortable: ~
                     options:
                         template: "@SyliusUi/Grid/Field/position.html.twig"

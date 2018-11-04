@@ -6,7 +6,7 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Core\Model\ProductVariantInterface;
+use Webmozart\Assert\Assert;
 
 class CatalogPromotionGroup implements CatalogPromotionGroupInterface
 {
@@ -21,6 +21,9 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
 
     /** @var CatalogPromotionInterface */
     private $catalog;
+
+    /** @var PromotionActionInterface */
+    private $action;
 
     public function __construct()
     {
@@ -52,9 +55,6 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
         $this->catalog = $catalog;
     }
 
-    /**
-     * @return Collection|ProductVariantInterface[]|null
-     */
     public function getProducts(): ?Collection
     {
         return $this->products;
@@ -79,5 +79,35 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     public function hasProduct(ProductVariantInterface $productVariant)
     {
         return $this->products->contains($productVariant);
+    }
+    //hack za formu - todo solve
+    public function getActions(): ?array
+    {
+        return array($this->getAction());
+    }
+
+    public function getAction(): ?PromotionActionInterface
+    {
+        return $this->action;
+    }
+
+    public function setAction($action): void
+    {
+        Assert::notNull($action);
+
+        $this->action = $action;
+        $this->action->addCatalogPromotionGroup($this);
+    }
+    //hack za formu - todo Uredi!! => parametar prima array prebaci u ono sta sam ostavia u interfejsu
+    public function setActions($actions): void
+    {
+        /** @var PromotionActionInterface $action */
+        $action = $this->getActionFromMultipleEntry(new ArrayCollection($actions));
+        $this->setAction($action);
+    }
+
+    private function getActionFromMultipleEntry(Collection $actions)
+    {
+        return $actions->first();
     }
 }

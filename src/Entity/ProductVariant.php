@@ -6,7 +6,7 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Sylius\Component\Core\Model\ProductVariant as BaseProductVariant;
 
-class ProductVariant extends BaseProductVariant
+class ProductVariant extends BaseProductVariant implements ProductVariantInterface
 {
     use CatalogPromotionGroupAwareTrait;
 }

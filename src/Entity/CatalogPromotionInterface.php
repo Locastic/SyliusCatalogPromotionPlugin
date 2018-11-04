@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Channel\Model\ChannelInterface;
@@ -69,6 +70,7 @@ interface CatalogPromotionInterface extends ResourceInterface
      * @return \DateTime|null
      */
     public function getEndsAt(): ?\DateTime;
+
 
     /**
      * @return Collection|null

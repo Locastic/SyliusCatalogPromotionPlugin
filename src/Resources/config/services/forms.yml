@@ -1,4 +1,5 @@
 services:
+#catalog promotion
     locastic.sylius_catalog_promotion_plugin.form.type.catalog_promotion:
         class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionType
         arguments:
@@ -24,10 +25,34 @@ services:
         tags:
             - { name: form.type }
 
-    locastic.sylius_catalog_promotion_plugin.form.type.catalog_promotion_group_collection:
-            class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogPromotionGroupCollectionType
-            arguments:
-                - '%locastic_sylius_catalog_promotion_plugin.model.catalog_promotion_group.class%'
-                - ['locastic']
-            tags:
-                - { name: form.type }
+    locastic.sylius_catalog_promotion_plugin.form.type.catalog_banner_image_type:
+        class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogBannerImageType
+        arguments:
+            - '%locastic_sylius_catalog_promotion_plugin.model.catalog_banner_image.class%'
+            - ['locastic']
+        tags:
+            - { name: form.type }
+
+#promo actions
+    locastic.sylius_catalog_promotion_plugin.form.type.promotion_action_choice_type:
+        class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionChoiceType
+        arguments:
+            - '%locastic_sylius_catalog_promotion_plugin.promotion_actions%'
+        tags:
+            - { name: form.type, alias: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionChoiceType }
+
+    locastic.sylius_catalog_promotion_plugin.form.type.promotion_action_type:
+        class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionType
+        arguments:
+            - '%locastic_sylius_catalog_promotion_plugin.model.promotion_action.class%'
+            - ['locastic']
+            - '@locastic_sylius_catalog_promotion_plugin.form_registry.promotion_action_executor'
+            - '@locastic_sylius_catalog_promotion_plugin.registry_promotion_action_executor'
+        tags:
+            - { name: form.type, alias: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionType }
+
+    locastic.sylius_catalog_promotion_plugin.form.type.promotion_action_collection_type:
+        class: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionCollectionType
+        arguments: ['@locastic_sylius_catalog_promotion_plugin.registry_promotion_action_executor']
+        tags:
+            - { name: form.type, alias: Locastic\SyliusCatalogPromotionPlugin\Form\Type\PromotionActionCollectionType }

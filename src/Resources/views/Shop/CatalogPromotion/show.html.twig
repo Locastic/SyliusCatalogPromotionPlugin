@@ -1,0 +1,40 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/messages.html.twig' as messages %}
+
+{% block content %}
+    <h2 class="ui block header">
+                {{ resource.translations.first.name }}
+    </h2>
+    <div class="one column grid">
+        <div class="ui fluid card">
+                {% set imagePath = '/media/image/'~resource.images.first.path %}
+                <img src="{{ imagePath }}" width="200px" style="align-self: center">
+            <div class="content">
+                {#<div class="header">#}
+                    {#Catalog promotion starts on#}
+                {#</div>#}
+                <div class="description">
+                    {{ resource.startsAt | date("m/d/Y") }} - {{ resource.endsAt | date("m/d/Y") }}
+                </div>
+                <div class="meta">
+                    {{ resource.translations.first.description }}
+                </div>
+            </div>
+            <div class="extra content">
+                <span class="right floated">
+                    -75% on prices
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui four cards" id="products">
+    {% for promoGroup in resource.promotionGroups %}
+        {% for productVariant in promoGroup.products %}
+            {% set product = productVariant.product %}
+            {% include '@SyliusCatalogPromotionPlugin/Shop/CatalogPromotion/CatalogProduct/_box.html.twig' %}
+        {% endfor %}
+    {% endfor %}
+    </div>
+{% endblock %}

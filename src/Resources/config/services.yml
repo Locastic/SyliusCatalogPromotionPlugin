@@ -15,3 +15,77 @@ services:
         public: false
         decorates: locastic_sylius_catalog_promotion_plugin.factory.catalog_promotion_group
         arguments: ['@locastic_sylius_catalog_promotion_plugin.custom_factory.catalog_promotion_group.inner']
+
+#providers
+    locastic_sylius_catalog_promotion_plugin.provider.channel_pricing_provider:
+        class: Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider
+        arguments:
+            - '@sylius.factory.channel_pricing'
+            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
+
+    locastic_sylius_catalog_promotion_plugin.provider.catalog_promotion_provider:
+        class: Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider
+        arguments:
+            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
+
+#service_registries
+    locastic_sylius_catalog_promotion_plugin.registry_promotion_action_executor:
+        class: Sylius\Component\Registry\ServiceRegistry
+        arguments:
+            - Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\ActionExecutorInterface
+            - action executor
+
+#form_registries
+    locastic_sylius_catalog_promotion_plugin.form_registry.promotion_action_executor:
+        class: Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry
+
+#processor
+    locastic_sylius_catalog_promotion_plugin.promotion.processor.catalog_promotion_processor:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Processor\CatalogPromotionProcessor
+        arguments:
+            - '@locastic_sylius_catalog_promotion_plugin.provider.channel_pricing_provider'
+            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
+            - '@locastic_sylius_catalog_promotion_plugin.provider.catalog_promotion_provider'
+            - '@locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator'
+            - '@sylius.manager.channel_pricing'
+            - '@sylius.repository.channel_pricing'
+
+#applicators
+    locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicator
+        arguments:
+            - '@locastic_sylius_catalog_promotion_plugin.registry_promotion_action_executor'
+
+#commands
+    locastic_sylius_catalog_promotion_plugin.command.refresh_catalog_promotions_command:
+        class: Locastic\SyliusCatalogPromotionPlugin\Command\RefreshCatalogPromotionsCommand
+        arguments:
+            - '@locastic_sylius_catalog_promotion_plugin.promotion.processor.catalog_promotion_processor'
+            - '@sylius.context.channel'
+            - '@sylius.templating.helper.format_money'
+            - '@sylius.context.locale.composite'
+            - '@sylius.context.shopper'
+        tags:
+            - { name: console.command }
+
+#action executors
+    locastic.sylius_catalog_promotion_plugin.promotion.action.executor.fixed_discount_promotion_action_executor:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\FixedDiscountPromotionActionExecutor
+        tags:
+            - { name: locastic.catalog_promotion_action_executor, type: fixed_discount, label: Fixed discount, form_type: Sylius\Bundle\CoreBundle\Form\Type\Promotion\Action\ChannelBasedFixedDiscountConfigurationType }
+
+    locastic.sylius_catalog_promotion_plugin.promotion.action.executor.percentage_discount_promotion_action_executor:
+        class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\PercentageDiscountPromotionActionExecutor
+        tags:
+            - { name: locastic.catalog_promotion_action_executor, type: percentage_discount, label: Percentage discount, form_type: Sylius\Bundle\PromotionBundle\Form\Type\Action\PercentageDiscountConfigurationType }
+
+#event_listener
+    locastic.sylius_catalog_promotion_plugin.listener.images_upload:
+        class: Sylius\Bundle\CoreBundle\EventListener\ImagesUploadListener
+        parent: sylius.listener.images_upload
+        autowire: true
+        autoconfigure: false
+        public: false
+        tags:
+            - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_create, method: uploadImages }
+            - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_update, method: uploadImages }

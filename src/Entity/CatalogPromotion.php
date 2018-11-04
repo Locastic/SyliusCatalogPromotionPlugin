@@ -7,12 +7,14 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelInterface;
+use Sylius\Component\Core\Model\ImageInterface;
+use Sylius\Component\Core\Model\ImagesAwareInterface;
 use Sylius\Component\Resource\Model\CodeAwareInterface;
 use Sylius\Component\Resource\Model\TranslatableInterface;
 use Sylius\Component\Resource\Model\TranslatableTrait;
 use Sylius\Component\Resource\Model\TranslationInterface;
 
-class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface, TranslatableInterface
+class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface, TranslatableInterface, ImagesAwareInterface
 {
     use TranslatableTrait {
         __construct as private initializeTranslationsCollection;
@@ -25,7 +27,7 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
     private $code;
 
     /** @var int */
-    private $position = 0;
+    private $priority = 0;
 
     /** @var \DateTime */
     private $startsAt;
@@ -39,11 +41,17 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
     /** @var ArrayCollection|CatalogPromotionGroupInterface[] */
     private $promotionGroups;
 
+    /** @var ArrayCollection|ImageInterface[] */
+    private $images;
+
     public function __construct()
     {
         $this->initializeTranslationsCollection();
         $this->channels = new ArrayCollection();
         $this->promotionGroups = new ArrayCollection();
+
+        $this->images = new ArrayCollection();
+        $this->addImage(new CatalogBannerImage());
     }
 
     public function getId()
@@ -51,14 +59,14 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
         return $this->id;
     }
 
-    public function setPriority(?int $position): void
+    public function setPriority(?int $priority): void
     {
-        $this->position = $position;
+        $this->priority = $priority;
     }
 
     public function getPriority(): ?int
     {
-        return $this->position;
+        return $this->priority;
     }
 
     public function setCode(?string $code): void
@@ -159,11 +167,46 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
         return $this->promotionGroups->contains($promotionGroup);
     }
 
-    /**
-     * @return TranslationInterface|CatalogPromotionTranslation
-     */
     protected function createTranslation(): TranslationInterface
     {
         return new CatalogPromotionTranslation();
+    }
+
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function getImagesByType(string $type): Collection
+    {
+        return $this->images->filter(function (ImageInterface $image) use ($type) {
+            return $type === $image->getType();
+        });
+    }
+
+    public function hasImages(): bool
+    {
+        return !$this->images->isEmpty();
+    }
+
+    public function hasImage(ImageInterface $image): bool
+    {
+        return $this->images->contains($image);
+    }
+
+    public function addImage(ImageInterface $image): void
+    {
+        if (!$this->hasImage($image)) {
+            $image->setOwner($this);
+            $this->images->add($image);
+        }
+    }
+
+    public function removeImage(ImageInterface $image): void
+    {
+        if ($this->hasImage($image)) {
+            $image->setOwner(null);
+            $this->images->removeElement($image);
+        }
     }
 }

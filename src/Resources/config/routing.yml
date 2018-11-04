@@ -1,3 +1,12 @@
 locastic_sylius_catalog_promotion_plugin_admin:
     resource: 'routing/admin.yml'
     prefix: 'admin'
+
+locastic_sylius_catalog_promotion_plugin_shop:
+    resource: 'routing/shop.yml'
+    prefix: /{_locale}
+    requirements:
+        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
+
+
+
