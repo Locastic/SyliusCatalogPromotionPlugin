@@ -164,7 +164,7 @@ class RefreshCatalogPromotionsCommand extends Command
         return [
             'catalogEmptyMessage'   => 'There are no active catalog promotions at the moment.',
             'tableHeaders'          => ['Product', 'Original price', 'New catalog price', 'Previously applied catalog promotion'],
-            'successMessage'        => 'Succesfully deactivated catalog promotions from the upper table.',
+            'successMessage'        => 'Succesfully activated catalog promotions from the upper table.',
             'method'                => 'renderActivationTableRow',
         ];
     }
