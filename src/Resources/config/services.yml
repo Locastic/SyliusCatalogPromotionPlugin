@@ -89,3 +89,9 @@ services:
         tags:
             - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_create, method: uploadImages }
             - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_update, method: uploadImages }
+
+#twig_extensions
+    locastic.sylius_catalog_promotion_plugin.catalog_twig_extension:
+        class: Locastic\SyliusCatalogPromotionPlugin\CatalogTwigExtension
+        tags:
+            - { name: twig.extension }

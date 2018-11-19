@@ -7,7 +7,7 @@
         <div class="ui dimmer">
             <div class="content">
                 <div class="center">
-                    <div class="ui inverted button">{{ 'sylius.ui.view_more'|trans }}</div>
+                    <div class="ui inverted button">{{ discountPercentage(productVariant.channelPricings.first) }}</div>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
             Promo price: {{ money.format(productVariant.channelPricings.first.price, 'USD') }}
         </div>
         <div>
-            Original price: <s>{{ money.format(productVariant.channelPricings.first.preCatalogPrice, 'USD') }}</s>
+            Original price: <s>{{ money.format(productVariant.channelPricings.first.originalPrice, 'USD') }}</s>
         </div>
 
     </div>
