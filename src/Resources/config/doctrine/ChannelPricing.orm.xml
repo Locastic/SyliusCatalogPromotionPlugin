@@ -9,7 +9,6 @@
         <many-to-one field="appliedCatalogPromotion" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion">
             <join-column name="applied_catalog_promotion" referenced-column-name="id"/>
         </many-to-one>
-        <field name="preCatalogPrice" column="pre_catalog_price" type="integer" nullable="false"/>
 
     </mapped-superclass>
 </doctrine-mapping>

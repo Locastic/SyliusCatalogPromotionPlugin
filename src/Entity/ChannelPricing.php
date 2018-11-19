@@ -13,11 +13,6 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
      */
     private $appliedCatalogPromotion;
 
-    /**
-     * @var int
-     */
-    private $preCatalogPrice = 0;
-
     public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoDiscount): void
     {
         if ($this->hasAppliedCatalogPromotion()) {
@@ -37,7 +32,7 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
 
         $catalogPrice = $this->providePositiveDiscountedPriceOrZero($promoDiscount);
 
-        $this->setPreCatalogPrice($this->price);
+        $this->setOriginalPrice($this->price);
         $this->setPrice($catalogPrice);
         $this->appliedCatalogPromotion = $catalogPromotion;
     }
@@ -48,29 +43,24 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
             return;
         }
 
-        $this->setPrice($this->preCatalogPrice);
-        $this->setPreCatalogPrice(0);
+        $this->setPrice($this->originalPrice);
+        $this->setOriginalPrice(0);
         $this->appliedCatalogPromotion = null;
     }
 
-    public function getPreCatalogPrice(): ?int
+    public function getOriginalPrice(): ?int
     {
         if ($this->hasAppliedCatalogPromotion()) {
-            return $this->preCatalogPrice;
+            return $this->originalPrice;
         }
 
         return $this->price;
     }
 
-    public function setPreCatalogPrice(int $price): void
-    {
-        $this->preCatalogPrice = $price;
-    }
-
     public function getPromotionDiscount(): ?int
     {
         if ($this->hasAppliedCatalogPromotion()) {
-            return abs($this->getPrice() - $this->getPreCatalogPrice());
+            return abs($this->getPrice() - $this->getOriginalPrice());
         }
 
         return 0;
