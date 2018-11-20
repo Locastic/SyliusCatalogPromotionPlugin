@@ -13,6 +13,11 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
      */
     private $appliedCatalogPromotion;
 
+    /**
+     * @var int | null
+     */
+    private $discountPercentage;
+
     public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoDiscount): void
     {
         if ($this->hasAppliedCatalogPromotion()) {
@@ -84,5 +89,15 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
     private function hasHigherPriorityThenPreviouslyApplied(CatalogPromotionInterface $catalogPromotion): bool
     {
         return ($catalogPromotion->getPriority() > $this->appliedCatalogPromotion->getPriority());
+    }
+
+    public function getDiscountPercentage(): ?int
+    {
+        return $this->discountPercentage;
+    }
+
+    public function setDiscountPercentage(?int $discountPercentage): void
+    {
+        $this->discountPercentage = $discountPercentage;
     }
 }

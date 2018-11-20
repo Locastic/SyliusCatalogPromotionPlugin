@@ -10,5 +10,13 @@
             <join-column name="applied_catalog_promotion" referenced-column-name="id"/>
         </many-to-one>
 
+        <field name="discountPercentage" type="integer" nullable="true"/>
+
+        <entity-listeners>
+            <entity-listener class="Locastic\SyliusCatalogPromotionPlugin\EventListener\ChannelPricingListener">
+                <lifecycle-callback type="postLoad" method="postLoadHandler"/>
+            </entity-listener>
+        </entity-listeners>
+
     </mapped-superclass>
 </doctrine-mapping>

@@ -90,6 +90,11 @@ services:
             - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_create, method: uploadImages }
             - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_update, method: uploadImages }
 
+    locastic.sylius_catalog_promotion_plugin.event_listener.channel_pricing_listener:
+        class: Locastic\SyliusCatalogPromotionPlugin\EventListener\ChannelPricingListener
+        tags:
+            - { name: doctrine.orm.entity_listener }
+
 #twig_extensions
     locastic.sylius_catalog_promotion_plugin.catalog_twig_extension:
         class: Locastic\SyliusCatalogPromotionPlugin\CatalogTwigExtension
