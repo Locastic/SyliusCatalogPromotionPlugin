@@ -15,9 +15,6 @@
     </a>
     <div class="content">
         <a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}" class="header sylius-product-name">{{ product.name }}</a>
-        {#{% if not product.variants.empty() %}#}
-            {#<div class="sylius-product-price">{{ money.calculatePrice(product|sylius_resolve_variant) }}</div>#}
-        {#{% endif %}#}
         <div class="meta">
             Promotion applied on "{{ productVariant.translation.name }}" product variant.
         </div>
@@ -25,10 +22,10 @@
 
     <div class="content">
         <div>
-            Promo price: {{ money.format(productVariant.channelPricings.first.price, 'USD') }}
+            Promo price: {{ money.format(productVariant.channelPricings.first.price, sylius.channel.baseCurrency.code) }}
         </div>
         <div>
-            Original price: <s>{{ money.format(productVariant.channelPricings.first.originalPrice, 'USD') }}</s>
+            Original price: <s>{{ money.format(productVariant.channelPricings.first.originalPrice, sylius.channel.baseCurrency.code) }}</s>
         </div>
 
     </div>

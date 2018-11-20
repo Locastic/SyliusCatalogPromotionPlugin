@@ -11,20 +11,12 @@
                 {% set imagePath = '/media/image/'~resource.images.first.path %}
                 <img src="{{ imagePath }}" width="200px" style="align-self: center">
             <div class="content">
-                {#<div class="header">#}
-                    {#Catalog promotion starts on#}
-                {#</div>#}
                 <div class="description">
                     {{ resource.startsAt | date("m/d/Y") }} - {{ resource.endsAt | date("m/d/Y") }}
                 </div>
                 <div class="meta">
                     {{ resource.translations.first.description }}
                 </div>
-            </div>
-            <div class="extra content">
-                <span class="right floated">
-                    -75% on prices
-                </span>
             </div>
         </div>
     </div>
