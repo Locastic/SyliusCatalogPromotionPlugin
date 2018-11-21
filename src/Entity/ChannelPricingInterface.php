@@ -11,4 +11,8 @@ interface ChannelPricingInterface extends BaseChannelPricingInterface
     public function detachCatalogPromotionAction(): void;
 
     public function getAppliedCatalogPromotion(): ?CatalogPromotionInterface;
+
+    public function setDiscount(?int $discount): void;
+
+    public function getDiscount(): ?int;
 }

@@ -6,9 +6,9 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Util;
 
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
 
-class DiscountResolver
+class ChannelPricingPercentageDiscountCalculator implements ChannelPricingCatalogPromotionCalculatorInterface
 {
-    public static function getPromotionPercentage(ChannelPricingInterface $channelPricing): int
+    public function provide(ChannelPricingInterface $channelPricing): ?int
     {
         if (!$channelPricing->getAppliedCatalogPromotion()) {
             return 0;
@@ -16,6 +16,6 @@ class DiscountResolver
 
         $discountQuote = 1 - ($channelPricing->getPrice() / $channelPricing->getOriginalPrice());
 
-        return (int)(100 * $discountQuote);
+        return (int) ($discountQuote * 100);
     }
 }

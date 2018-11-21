@@ -71,11 +71,15 @@ services:
 #action executors
     locastic.sylius_catalog_promotion_plugin.promotion.action.executor.fixed_discount_promotion_action_executor:
         class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\FixedDiscountPromotionActionExecutor
+        arguments:
+            - '@locastic.sylius_catalog_promotion_plugin.util.channel_pricing_percentage_discount_calculator'
         tags:
             - { name: locastic.catalog_promotion_action_executor, type: fixed_discount, label: Fixed discount, form_type: Sylius\Bundle\CoreBundle\Form\Type\Promotion\Action\ChannelBasedFixedDiscountConfigurationType }
 
     locastic.sylius_catalog_promotion_plugin.promotion.action.executor.percentage_discount_promotion_action_executor:
         class: Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\PercentageDiscountPromotionActionExecutor
+        arguments:
+            - '@locastic.sylius_catalog_promotion_plugin.util.channel_pricing_percentage_discount_calculator'
         tags:
             - { name: locastic.catalog_promotion_action_executor, type: percentage_discount, label: Percentage discount, form_type: Sylius\Bundle\PromotionBundle\Form\Type\Action\PercentageDiscountConfigurationType }
 
@@ -90,13 +94,11 @@ services:
             - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_create, method: uploadImages }
             - { name: kernel.event_listener, event: locastic_sylius_catalog_promotion_plugin.catalog_promotion.pre_update, method: uploadImages }
 
-    locastic.sylius_catalog_promotion_plugin.event_listener.channel_pricing_listener:
-        class: Locastic\SyliusCatalogPromotionPlugin\EventListener\ChannelPricingListener
-        tags:
-            - { name: doctrine.orm.entity_listener }
-
 #twig_extensions
     locastic.sylius_catalog_promotion_plugin.catalog_twig_extension:
         class: Locastic\SyliusCatalogPromotionPlugin\CatalogTwigExtension
         tags:
             - { name: twig.extension }
+
+    locastic.sylius_catalog_promotion_plugin.util.channel_pricing_percentage_discount_calculator:
+        class: Locastic\SyliusCatalogPromotionPlugin\Util\ChannelPricingPercentageDiscountCalculator
