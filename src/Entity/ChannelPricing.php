@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
+use Locastic\SyliusCatalogPromotionPlugin\Util\DiscountResolver;
 use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
 
 class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
@@ -12,6 +13,11 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
      * @var CatalogPromotionInterface
      */
     private $appliedCatalogPromotion;
+
+    /**
+     * @var int|null
+     */
+    private $discount;
 
     public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoDiscount): void
     {
@@ -34,6 +40,7 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
 
         $this->setOriginalPrice($this->price);
         $this->setPrice($catalogPrice);
+
         $this->appliedCatalogPromotion = $catalogPromotion;
     }
 
@@ -84,5 +91,15 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
     private function hasHigherPriorityThenPreviouslyApplied(CatalogPromotionInterface $catalogPromotion): bool
     {
         return ($catalogPromotion->getPriority() > $this->appliedCatalogPromotion->getPriority());
+    }
+
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(?int $discount): void
+    {
+        $this->discount = $discount;
     }
 }
