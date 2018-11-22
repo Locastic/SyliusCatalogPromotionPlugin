@@ -51,7 +51,9 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
         }
 
         $this->setPrice($this->originalPrice);
-        $this->setOriginalPrice(0);
+        $this->setOriginalPrice(null);
+        $this->setDiscount(null);
+
         $this->appliedCatalogPromotion = null;
     }
 
