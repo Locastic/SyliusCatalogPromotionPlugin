@@ -10,7 +10,11 @@ class ChannelPricingPercentageDiscountCalculator implements ChannelPricingCatalo
 {
     public function provide(ChannelPricingInterface $channelPricing): ?int
     {
-        if (!$channelPricing->getAppliedCatalogPromotion()) {
+        if (null === $channelPricing->getAppliedCatalogPromotion()) {
+            return null;
+        }
+
+        if (0 === $channelPricing->getOriginalPrice()) {
             return 0;
         }
 
