@@ -20,6 +20,6 @@ class ChannelPricingPercentageDiscountCalculator implements ChannelPricingCatalo
 
         $discountQuote = 1 - ($channelPricing->getPrice() / $channelPricing->getOriginalPrice());
 
-        return (int) ($discountQuote * 100);
+        return (int) ceil($discountQuote * 100);
     }
 }

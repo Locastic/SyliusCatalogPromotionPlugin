@@ -7,7 +7,7 @@
         <div class="ui dimmer">
             <div class="content">
                 <div class="center">
-                    <div class="ui inverted button">{{ discountPercentage(productVariant.channelPricings.first) }}</div>
+                    <div class="ui inverted button">{{ 'sylius.ui.view_more'|trans }}</div>
                 </div>
             </div>
         </div>
@@ -15,19 +15,28 @@
     </a>
     <div class="content">
         <a href="{{ path('sylius_shop_product_show', {'slug': product.slug, '_locale': product.translation.locale}) }}" class="header sylius-product-name">{{ product.name }}</a>
-        <div class="meta">
-            Promotion applied on "{{ productVariant.translation.name }}" product variant.
-        </div>
     </div>
 
     <div class="content">
+        <div class="right floated">
+            {% set promoDiscounts = product.promotionDiscounts(sylius.channel) %}
+            Discounts up to {{ max(promoDiscounts.toArray) }}%.
+        </div>
+    </div>
+
+
+    <div class="content">
+        {% for productVariant in product.variants %}
+        <div class="meta">
+            Promotion applied on "{{ productVariant.translation.name }}" product variant.
+        </div>
         <div>
             Promo price: {{ money.format(productVariant.channelPricings.first.price, sylius.channel.baseCurrency.code) }}
         </div>
         <div>
             Original price: <s>{{ money.format(productVariant.channelPricings.first.originalPrice, sylius.channel.baseCurrency.code) }}</s>
         </div>
-
+        {% endfor %}
     </div>
 </div>
 
