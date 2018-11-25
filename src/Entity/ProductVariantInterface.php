@@ -9,10 +9,10 @@ interface ProductVariantInterface extends BaseProductVariantInterface
     /**
      * @return CatalogPromotionGroup|null
      */
-    public function getCatalogPromotionGroup(): ?CatalogPromotionGroup;
+    public function getCatalogPromotionGroup(): ?CatalogPromotionGroupInterface;
 
     /**
      * @param CatalogPromotionGroup|null $catalogPromotionGroup
      */
-    public function setCatalogPromotionGroup(?CatalogPromotionGroup $catalogPromotionGroup): void;
+    public function setCatalogPromotionGroup(?CatalogPromotionGroupInterface $catalogPromotionGroup): void;
 }

@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariantInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicatorInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider;
@@ -104,14 +105,21 @@ final class CatalogPromotionProcessor
         foreach ($catalogPromotion->getPromotionGroups() as $promotionGroup) {
             $catalogPromoGroupProducts = $promotionGroup->getProducts();
 
-            $this->promoteCatalogGroupProducts($catalogPromoGroupProducts, $promotionGroup, $channel);
+            if (null === $catalogPromoGroupProducts) {
+                return;
+            }
+
+            /** @var ProductInterface $product */
+            foreach ($catalogPromoGroupProducts as $product) {
+                $this->promoteCatalogGroupProducts($product->getVariants(), $promotionGroup, $channel);
+            }
         }
     }
 
-    private function promoteCatalogGroupProducts(Collection $catalogPromotionProducts, CatalogPromotionGroupInterface $promotionGroup, ChannelInterface $channel)
+    private function promoteCatalogGroupProducts(Collection $promotedProductVariants, CatalogPromotionGroupInterface $promotionGroup, ChannelInterface $channel)
     {
-        /** @var ProductVariantInterface $product */
-        foreach ($catalogPromotionProducts as $productVariant) {
+        /** @var ProductVariantInterface $productVariant */
+        foreach ($promotedProductVariants as $productVariant) {
             /** @var ChannelPricingInterface $channelPricing */
             $channelPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
 

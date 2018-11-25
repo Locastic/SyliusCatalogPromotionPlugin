@@ -16,7 +16,7 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     /** @var string */
     private $name;
 
-    /** @var ProductVariantInterface[]|ArrayCollection[] */
+    /** @var ProductInterface[]|ArrayCollection[] */
     private $products;
 
     /** @var CatalogPromotionInterface */
@@ -60,25 +60,25 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
         return $this->products;
     }
 
-    public function addProduct(ProductVariantInterface $productVariant): void
+    public function addProduct(ProductInterface $product): void
     {
-        if (!$this->hasProduct($productVariant)) {
-            $this->products->add($productVariant);
+        if (!$this->hasProduct($product)) {
+            $this->products->add($product);
 
-            $productVariant->setCatalogPromotionGroup($this);
+            $product->setAppliedCatalogPromotionGroup($this);
         }
     }
 
-    public function removeProduct(ProductVariantInterface $productVariant): void
+    public function removeProduct(ProductInterface $product): void
     {
-        if ($this->hasProduct($productVariant)) {
-            $this->products->removeElement($productVariant);
+        if ($this->hasProduct($product)) {
+            $this->products->removeElement($product);
         }
     }
 
-    public function hasProduct(ProductVariantInterface $productVariant)
+    public function hasProduct(ProductInterface $product)
     {
-        return $this->products->contains($productVariant);
+        return $this->products->contains($product);
     }
     //hack za formu - todo solve
     public function getActions(): ?array

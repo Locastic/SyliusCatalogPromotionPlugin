@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Form\Type;
 
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\Product;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariant;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
+use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Core\Repository\ProductVariantRepositoryInterface;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\CallbackTransformer;
@@ -20,13 +23,13 @@ use Symfony\Component\Form\FormEvents;
 class CatalogPromotionGroupType extends AbstractResourceType
 {
     /**
-     * @var ProductVariantRepositoryInterface
+     * @var ProductRepositoryInterface
      */
-    private $productVariantRepository;
+    private $productRepository;
 
-    public function __construct(string $dataClass, $validationGroups = [], ProductVariantRepositoryInterface $productVariantRepository)
+    public function __construct(string $dataClass, $validationGroups = [], ProductRepositoryInterface $productRepository)
     {
-        $this->productVariantRepository = $productVariantRepository;
+        $this->productRepository = $productRepository;
 
         parent::__construct($dataClass, $validationGroups);
     }
@@ -36,8 +39,8 @@ class CatalogPromotionGroupType extends AbstractResourceType
         $builder
             ->add('name', TextType::class)
             ->add('products', ChoiceType::class, [
-                'choices' => $this->productVariantRepository->findBy([], [], 100),
-                'choice_label' => function (ProductVariant $productVariant) {
+                'choices' => $this->productRepository->findBy([], [], 100),
+                'choice_label' => function (ProductInterface $productVariant) {
                     return $productVariant;
                 },
                 'multiple' => true,

@@ -7,12 +7,12 @@ trait CatalogPromotionGroupAwareTrait
     /** @var CatalogPromotionGroup */
     protected $catalogPromotionGroup;
 
-    public function getCatalogPromotionGroup(): ?CatalogPromotionGroup
+    public function getCatalogPromotionGroup(): ?CatalogPromotionGroupInterface
     {
         return $this->catalogPromotionGroup;
     }
 
-    public function setCatalogPromotionGroup(?CatalogPromotionGroup $catalogPromotionGroup): void
+    public function setCatalogPromotionGroup(?CatalogPromotionGroupInterface $catalogPromotionGroup): void
     {
         $this->catalogPromotionGroup = $catalogPromotionGroup;
     }

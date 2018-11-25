@@ -10,7 +10,7 @@
 
         <field name="name" type="string" column="name" />
         <many-to-one field="catalog" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion" inversed-by="promotionGroups"/>
-        <one-to-many field="products" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariant" mapped-by="catalogPromotionGroup">
+        <one-to-many field="products" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\Product" mapped-by="appliedCatalogPromotionGroup">
             <cascade>
                 <cascade-all/>
             </cascade>

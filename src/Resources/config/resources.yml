@@ -32,6 +32,9 @@ sylius_resource:
 
 sylius_product:
     resources:
+        product:
+            classes:
+                model: Locastic\SyliusCatalogPromotionPlugin\Entity\Product
         product_variant:
             classes:
                 model: Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariant
