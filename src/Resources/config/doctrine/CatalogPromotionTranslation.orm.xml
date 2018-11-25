@@ -8,7 +8,7 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="name" type="string"  column="description" />
-        <field name="description" type="string" column="name" />
+        <field name="name" type="string"  column="name" />
+        <field name="description" type="string" column="description" nullable="true"/>
     </entity>
 </doctrine-mapping>
