@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
-use Locastic\SyliusCatalogPromotionPlugin\Util\DiscountResolver;
 use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
 
 class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
@@ -82,7 +81,7 @@ class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterfa
 
     public function hasAppliedCatalogPromotion(): bool
     {
-        return (!is_null($this->appliedCatalogPromotion));
+        return (null !== $this->appliedCatalogPromotion);
     }
 
     private function providePositiveDiscountedPriceOrZero($promoDiscount)

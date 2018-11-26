@@ -32,9 +32,9 @@ sylius_resource:
 
 sylius_product:
     resources:
-        product_variant:
+        product:
             classes:
-                model: Locastic\SyliusCatalogPromotionPlugin\Entity\ProductVariant
+                model: Locastic\SyliusCatalogPromotionPlugin\Entity\Product
 sylius_core:
     resources:
         channel_pricing:

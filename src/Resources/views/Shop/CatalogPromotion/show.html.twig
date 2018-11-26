@@ -23,8 +23,8 @@
 
     <div class="ui four cards" id="products">
     {% for promoGroup in resource.promotionGroups %}
-        {% for productVariant in promoGroup.products %}
-            {% set product = productVariant.product %}
+        {% for product in promoGroup.products %}
+
             {% include '@SyliusCatalogPromotionPlugin/Shop/CatalogPromotion/CatalogProduct/_box.html.twig' %}
         {% endfor %}
     {% endfor %}

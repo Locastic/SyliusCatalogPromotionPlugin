@@ -4,16 +4,16 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 trait CatalogPromotionGroupAwareTrait
 {
-    /** @var CatalogPromotionGroup */
-    protected $catalogPromotionGroup;
+    /** @var CatalogPromotionGroupInterface */
+    private $appliedCatalogPromotionGroup;
 
-    public function getCatalogPromotionGroup(): ?CatalogPromotionGroup
+    public function getAppliedCatalogPromotionGroup(): ?CatalogPromotionGroupInterface
     {
-        return $this->catalogPromotionGroup;
+        return $this->appliedCatalogPromotionGroup;
     }
 
-    public function setCatalogPromotionGroup(?CatalogPromotionGroup $catalogPromotionGroup): void
+    public function setAppliedCatalogPromotionGroup(?CatalogPromotionGroupInterface $catalogPromotionGroup): void
     {
-        $this->catalogPromotionGroup = $catalogPromotionGroup;
+        $this->appliedCatalogPromotionGroup = $catalogPromotionGroup;
     }
 }

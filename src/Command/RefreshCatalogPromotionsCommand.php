@@ -130,7 +130,7 @@ class RefreshCatalogPromotionsCommand extends Command
     {
         $table
             ->addRow([
-                $channelPricing->getProductVariant()->getName(),
+                $channelPricing->getProductVariant()->getProduct()->getName() . ' (' . $channelPricing->getProductVariant()->getName() . ')',
                 $this->moneyHelper->formatAmount($channelPricing->getOriginalPrice(), $currencyCode, $localeCode),
                 $this->moneyHelper->formatAmount($channelPricing->getPrice(), $currencyCode, $localeCode),
                 $channelPricing->getAppliedCatalogPromotion()->getName()
@@ -143,7 +143,7 @@ class RefreshCatalogPromotionsCommand extends Command
 
         $table
             ->addRow([
-                $channelPricing->getProductVariant()->getName(),
+                $channelPricing->getProductVariant()->getProduct()->getName() . ' - ' . $channelPricing->getProductVariant()->getName(),
                 $this->moneyHelper->formatAmount($catalogPrice, $currencyCode, $localeCode),
                 $this->moneyHelper->formatAmount($channelPricing->getPrice(), $currencyCode, $localeCode),
                 $previouslyAppliedCatalog->getName()

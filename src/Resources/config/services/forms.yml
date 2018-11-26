@@ -21,7 +21,7 @@ services:
         arguments:
             - '%locastic_sylius_catalog_promotion_plugin.model.catalog_promotion_group.class%'
             - ['locastic']
-            - "@sylius.repository.product_variant"
+            - "@sylius.repository.product"
         tags:
             - { name: form.type }
 
