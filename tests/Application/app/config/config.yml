@@ -10,6 +10,7 @@ imports:
 
     - { resource: "../../../../vendor/sylius/sylius/app/config/security.yml" }
     - { resource: "@SyliusCatalogPromotionPlugin/Resources/config/config.yml" }
+    - { resource: "resources.yml" }
 
 framework:
     translator: { fallbacks: ["%locale%", "en"] }
@@ -48,6 +49,16 @@ doctrine:
         driver: "pdo_sqlite"
         path: "%kernel.project_dir%/var/db.sql"
         charset: UTF8
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        auto_mapping: true
+        mappings:
+            Tests:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/app/config/doctrine'
+                prefix: 'Tests\Acme\SyliusExamplePlugin\Application\src\Entity'
 
 fos_rest:
     exception: ~

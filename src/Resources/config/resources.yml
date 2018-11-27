@@ -39,5 +39,4 @@ sylius_core:
     resources:
         channel_pricing:
             classes:
-                model: Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricing
                 repository: Locastic\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepository

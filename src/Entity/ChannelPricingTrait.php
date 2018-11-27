@@ -1,12 +1,8 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
-use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
-
-class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
+trait ChannelPricingTrait
 {
     /**
      * @var CatalogPromotionInterface
