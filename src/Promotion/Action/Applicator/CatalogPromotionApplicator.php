@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
-use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
-use Locastic\SyliusCatalogPromotionPlugin\Entity\PromotionActionInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Executor\ActionExecutorInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 

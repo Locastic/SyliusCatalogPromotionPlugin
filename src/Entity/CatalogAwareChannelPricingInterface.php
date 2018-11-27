@@ -2,7 +2,7 @@
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
-interface ChannelPricingAwareInterface
+interface CatalogAwareChannelPricingInterface
 {
     public function applyCatalogPromotionAction(CatalogPromotionInterface $catalogPromotion, int $promoAmount): void;
 

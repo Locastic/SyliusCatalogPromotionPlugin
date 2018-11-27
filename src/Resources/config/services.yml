@@ -19,9 +19,6 @@ services:
 #providers
     locastic_sylius_catalog_promotion_plugin.provider.channel_pricing_provider:
         class: Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider
-        arguments:
-            - '@sylius.factory.channel_pricing'
-            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
 
     locastic_sylius_catalog_promotion_plugin.provider.catalog_promotion_provider:
         class: Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider
@@ -49,6 +46,7 @@ services:
             - '@locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator'
             - '@sylius.manager.channel_pricing'
             - '@sylius.repository.channel_pricing'
+            - '@sylius.repository.product'
 
 #applicators
     locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator:

@@ -9,15 +9,17 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
-use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
-use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogAwareChannelPricingInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicatorInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\ChannelPricingInterface;
+use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
+use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 
 final class CatalogPromotionProcessor
 {
@@ -45,13 +47,17 @@ final class CatalogPromotionProcessor
     /** @var ArrayCollection */
     private $deactivatedChannelPricings;
 
+    /** @var ProductRepositoryInterface */
+    private $productRepository;
+
     public function __construct(
         ChannelPricingProvider $channelPricingProvider,
         CatalogPromotionRepository $promotionRepository,
         CatalogPromotionProvider $catalogPromotionProvider,
         CatalogPromotionApplicatorInterface $promotionApplicator,
         EntityManagerInterface $channelPricingManager,
-        ChannelPricingRepository $channelPricingRepository
+        ChannelPricingRepository $channelPricingRepository,
+        ProductRepositoryInterface $productRepository
     ) {
         $this->promotionRepository = $promotionRepository;
         $this->channelPricingProvider = $channelPricingProvider;
@@ -59,6 +65,7 @@ final class CatalogPromotionProcessor
         $this->promotionApplicator = $promotionApplicator;
         $this->channelPricingManager = $channelPricingManager;
         $this->channelPricingRepository = $channelPricingRepository;
+        $this->productRepository = $productRepository;
         $this->activatedChannelPricings = new ArrayCollection();
         $this->deactivatedChannelPricings = new ArrayCollection();
     }
@@ -67,7 +74,7 @@ final class CatalogPromotionProcessor
     {
         $promotedChannelPricings = $this->channelPricingRepository->findAllWithAppliedCatalogPromotionsByChannel($channel);
 
-        /** @var ChannelPricingInterface $channelPricing */
+        /** @var ChannelPricingInterface|CatalogAwareChannelPricingInterface $channelPricing */
         foreach ($promotedChannelPricings as $channelPricing) {
             $catalogPrice = $channelPricing->getPrice();
             $previouslyAppliedCatalog = $channelPricing->getAppliedCatalogPromotion();
@@ -103,10 +110,12 @@ final class CatalogPromotionProcessor
     {
         /** @var CatalogPromotionGroupInterface $promotionGroup */
         foreach ($catalogPromotion->getPromotionGroups() as $promotionGroup) {
-            $catalogPromoGroupProducts = $promotionGroup->getProducts();
+            $catalogPromoGroupProducts = $this->productRepository->findBy([
+                'appliedCatalogPromotionGroup' => $promotionGroup->getId()
+            ]);
 
             if (null === $catalogPromoGroupProducts) {
-                return;
+                continue;
             }
 
             /** @var ProductInterface $product */

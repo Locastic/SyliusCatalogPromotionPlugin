@@ -6,6 +6,7 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Core\Model\ProductInterface;
 use Webmozart\Assert\Assert;
 
 class CatalogPromotionGroup implements CatalogPromotionGroupInterface
