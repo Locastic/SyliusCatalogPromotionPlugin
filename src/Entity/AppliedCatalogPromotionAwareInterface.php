@@ -2,9 +2,7 @@
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
-use Sylius\Component\Core\Model\ProductInterface as BaseProductInterface;
-
-interface ProductInterface extends BaseProductInterface
+interface AppliedCatalogPromotionAwareInterface
 {
     public function getAppliedCatalogPromotionGroup(): ?CatalogPromotionGroupInterface;
 

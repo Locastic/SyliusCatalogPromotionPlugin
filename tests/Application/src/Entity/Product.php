@@ -4,29 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Acme\SyliusExamplePlugin\Application\src\Entity;
 
-use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupAwareTrait;
-use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\AppliedCatalogPromotionAwareInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductTrait;
+use Sylius\Component\Core\Model\Product as BaseProduct;
 
-class Product
+class Product extends BaseProduct implements AppliedCatalogPromotionAwareInterface
 {
-    use CatalogPromotionGroupAwareTrait;
-
-    public function getAppliedCatalogPromotion(): ?CatalogPromotionInterface
-    {
-        return (null !== $this->getAppliedCatalogPromotionGroup()) ? $this->getAppliedCatalogPromotionGroup()->getCatalog() : null;
-    }
-
-    public function getPromotionDiscounts(ChannelInterface $channel)
-    {
-        $promotionDiscounts = $this->getVariants()->map(function (ProductVariantInterface $productVariant) use ($channel) {
-            /** @var ChannelPricingInterface $channelPricing */
-            $channelPricing = $productVariant->getChannelPricingForChannel($channel);
-
-            return $channelPricing->getDiscount();
-        });
-
-        return $promotionDiscounts;
-    }
+    use ProductTrait;
 }

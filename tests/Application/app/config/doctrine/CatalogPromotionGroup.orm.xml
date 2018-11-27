@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Tests\Acme\SyliusExamplePlugin\Application\src\Entity\CatalogPromotionGroup" table="locastic_catalog_promotion_group">
+        <one-to-many field="products" target-entity="Tests\Acme\SyliusExamplePlugin\Application\src\Entity\Product" mapped-by="appliedCatalogPromotionGroup">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+    </entity>
+
+</doctrine-mapping>
