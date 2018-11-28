@@ -30,9 +30,8 @@ class CatalogPromotionProvider
     public function getProducts(CatalogPromotionInterface $catalogPromotion): Collection
     {
         /** @var CatalogPromotionGroupInterface[]|Collection $catalogPromoGroup */
-        $catalogPromotionGroups = $this->catalogPromotionGroupRepository->findByCatalog([
-            'catalog' => $catalogPromotion->getId()
-        ]);
+        $catalogPromotionGroups = $this->catalogPromotionGroupRepository
+            ->findByCatalogPromotion($catalogPromotion);
 
         return new ArrayCollection($this->getCatalogProducts($catalogPromotionGroups));
     }
