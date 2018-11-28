@@ -9,21 +9,21 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 trait ProductTrait
 {
     /** @var CatalogPromotionGroupInterface */
-    private $appliedCatalogPromotionGroup;
+    private $catalogPromotionGroup;
 
-    public function getAppliedCatalogPromotionGroup(): ?CatalogPromotionGroupInterface
+    public function getCatalogPromotionGroup(): ?CatalogPromotionGroupInterface
     {
-        return $this->appliedCatalogPromotionGroup;
+        return $this->catalogPromotionGroup;
     }
 
-    public function setAppliedCatalogPromotionGroup(?CatalogPromotionGroupInterface $catalogPromotionGroup): void
+    public function setCatalogPromotionGroup(?CatalogPromotionGroupInterface $catalogPromotionGroup): void
     {
-        $this->appliedCatalogPromotionGroup = $catalogPromotionGroup;
+        $this->catalogPromotionGroup = $catalogPromotionGroup;
     }
 
-    public function getAppliedCatalogPromotion(): ?CatalogPromotionInterface
+    public function getCatalogPromotion(): ?CatalogPromotionInterface
     {
-        return (null !== $this->getAppliedCatalogPromotionGroup()) ? $this->getAppliedCatalogPromotionGroup()->getCatalog() : null;
+        return (null !== $this->getCatalogPromotionGroup()) ? $this->getCatalogPromotionGroup()->getCatalog() : null;
     }
 
     public function getPromotionDiscounts(ChannelInterface $channel)

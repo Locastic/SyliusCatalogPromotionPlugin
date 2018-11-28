@@ -14,5 +14,10 @@
                 <cascade-persist/>
             </cascade>
         </many-to-one>
+        <one-to-many field="products" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\ProductInterface" mapped-by="catalogPromotionGroup" fetch="EAGER">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
     </mapped-superclass>
 </doctrine-mapping>

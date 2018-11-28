@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface CatalogPromotionGroupInterface extends ResourceInterface

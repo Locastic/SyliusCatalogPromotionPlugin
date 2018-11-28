@@ -59,7 +59,8 @@ doctrine:
                 type: xml
                 dir: '%kernel.project_dir%/app/config/doctrine'
                 prefix: 'Tests\Acme\SyliusExamplePlugin\Application\src\Entity'
-
+        resolve_target_entities:
+            Locastic\SyliusCatalogPromotionPlugin\Entity\ProductInterface: Tests\Acme\SyliusExamplePlugin\Application\src\Entity\Product
 fos_rest:
     exception: ~
     view:

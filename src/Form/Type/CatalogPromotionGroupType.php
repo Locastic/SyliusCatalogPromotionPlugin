@@ -40,8 +40,8 @@ class CatalogPromotionGroupType extends AbstractResourceType
             ->add('name', TextType::class)
             ->add('products', ChoiceType::class, [
                 'choices' => $this->productRepository->findBy([], [], 100),
-                'choice_label' => function (ProductInterface $productVariant) {
-                    return $productVariant;
+                'choice_label' => function (ProductInterface $product) {
+                    return $product;
                 },
                 'multiple' => true,
                 'expanded' => true,

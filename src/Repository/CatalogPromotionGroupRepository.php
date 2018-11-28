@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Locastic\SyliusCatalogPromotionPlugin\Repository;
 
 use Doctrine\ORM\QueryBuilder;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
-class CatalogPromotionGroupRepository extends EntityRepository
+class CatalogPromotionGroupRepository extends EntityRepository implements CatalogPromotionGroupRepositoryInterface
 {
     /**
      * @param $catalogPromotionId

@@ -3,6 +3,8 @@
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 
 {% block content %}
+    {% set catalogPromotion = resource %}
+
     <h2 class="ui block header">
                 {{ resource.translations.first.name }}
     </h2>
@@ -22,11 +24,8 @@
     </div>
 
     <div class="ui four cards" id="products">
-    {% for promoGroup in resource.promotionGroups %}
-        {% for product in promoGroup.products %}
-
-            {% include '@SyliusCatalogPromotionPlugin/Shop/CatalogPromotion/CatalogProduct/_box.html.twig' %}
-        {% endfor %}
+    {% for product in getProductsFromCatalog(catalogPromotion) %}
+        {% include '@SyliusCatalogPromotionPlugin/Shop/CatalogPromotion/CatalogProduct/_box.html.twig' %}
     {% endfor %}
     </div>
 {% endblock %}

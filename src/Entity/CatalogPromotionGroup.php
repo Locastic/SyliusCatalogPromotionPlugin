@@ -6,25 +6,24 @@ namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Core\Model\ProductInterface;
 use Webmozart\Assert\Assert;
 
 class CatalogPromotionGroup implements CatalogPromotionGroupInterface
 {
     /** @var mixed */
-    private $id;
+    protected $id;
 
     /** @var string */
-    private $name;
+    protected $name;
 
     /** @var ProductInterface[]|ArrayCollection[] */
-    private $products;
+    protected $products;
 
     /** @var CatalogPromotionInterface */
-    private $catalog;
+    protected $catalog;
 
     /** @var PromotionActionInterface */
-    private $action;
+    protected $action;
 
     public function __construct()
     {
@@ -66,7 +65,7 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
         if (!$this->hasProduct($product)) {
             $this->products->add($product);
 
-            $product->setAppliedCatalogPromotionGroup($this);
+            $product->setCatalogPromotionGroup($this);
         }
     }
 
@@ -74,6 +73,8 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     {
         if ($this->hasProduct($product)) {
             $this->products->removeElement($product);
+
+            $product->setCatalogPromotionGroup(null);
         }
     }
 
@@ -81,6 +82,7 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     {
         return $this->products->contains($product);
     }
+
     //hack za formu - todo solve
     public function getActions(): ?array
     {
@@ -99,6 +101,7 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
         $this->action = $action;
         $this->action->addCatalogPromotionGroup($this);
     }
+
     //hack za formu - todo Uredi!! => parametar prima array prebaci u ono sta sam ostavia u interfejsu
     public function setActions($actions): void
     {
