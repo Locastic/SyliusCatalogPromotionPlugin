@@ -2,7 +2,7 @@
 
 namespace Locastic\SyliusCatalogPromotionPlugin\Entity;
 
-trait ChannelPricingTrait
+trait CatalogChannelPricingTrait
 {
     /**
      * @var CatalogPromotionInterface

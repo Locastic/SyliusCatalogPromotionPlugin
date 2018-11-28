@@ -6,7 +6,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
-trait ProductTrait
+trait CatalogProductTrait
 {
     /** @var CatalogPromotionGroupInterface */
     private $catalogPromotionGroup;
