@@ -86,7 +86,7 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     //hack za formu - todo solve
     public function getActions(): ?array
     {
-        return array($this->getAction());
+        return [$this->getAction()];
     }
 
     public function getAction(): ?PromotionActionInterface

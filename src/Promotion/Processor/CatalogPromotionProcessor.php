@@ -134,10 +134,9 @@ final class CatalogPromotionProcessor
             $promotionGroup = $product->getCatalogPromotionGroup();
 
             if (null !== $channelPricing && null !== $promotionGroup) {
-            $this->promotionApplicator->apply($channelPricing, $promotionGroup);
-            $this->activatedChannelPricings->add($channelPricing);
-            $this->channelPricingManager->persist($channelPricing);
-
+                $this->promotionApplicator->apply($channelPricing, $promotionGroup);
+                $this->activatedChannelPricings->add($channelPricing);
+                $this->channelPricingManager->persist($channelPricing);
             }
         }
     }
