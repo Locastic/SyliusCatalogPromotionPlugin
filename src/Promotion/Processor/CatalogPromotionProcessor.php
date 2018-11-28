@@ -48,21 +48,13 @@ final class CatalogPromotionProcessor
     /** @var ArrayCollection */
     private $deactivatedChannelPricings;
 
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
-
-    /** @var CatalogPromotionGroupRepository */
-    private $catalogPromotionGroupRepository;
-
     public function __construct(
         ChannelPricingProvider $channelPricingProvider,
         CatalogPromotionRepository $promotionRepository,
         CatalogPromotionProvider $catalogPromotionProvider,
         CatalogPromotionApplicatorInterface $promotionApplicator,
         EntityManagerInterface $channelPricingManager,
-        ChannelPricingRepository $channelPricingRepository,
-        ProductRepositoryInterface $productRepository,
-        CatalogPromotionGroupRepository $catalogPromotionGroupRepository
+        ChannelPricingRepository $channelPricingRepository
     ) {
         $this->promotionRepository = $promotionRepository;
         $this->channelPricingProvider = $channelPricingProvider;
@@ -70,8 +62,6 @@ final class CatalogPromotionProcessor
         $this->promotionApplicator = $promotionApplicator;
         $this->channelPricingManager = $channelPricingManager;
         $this->channelPricingRepository = $channelPricingRepository;
-        $this->productRepository = $productRepository;
-        $this->catalogPromotionGroupRepository = $catalogPromotionGroupRepository;
         $this->activatedChannelPricings = new ArrayCollection();
         $this->deactivatedChannelPricings = new ArrayCollection();
     }
@@ -113,7 +103,7 @@ final class CatalogPromotionProcessor
         return $this->activatedChannelPricings;
     }
 
-    private function promoteCatalogGroups(CatalogPromotionInterface $catalogPromotion, ChannelInterface $channel)
+    private function promoteCatalogGroups(CatalogPromotionInterface $catalogPromotion, ChannelInterface $channel): void
     {
         $catalogPromotionProducts = $this->catalogPromotionProvider->getProducts($catalogPromotion);
 

@@ -24,7 +24,10 @@ class CatalogPromotionApplicator implements CatalogPromotionApplicatorInterface
     public function apply(ChannelPricingInterface $channelPricing, CatalogPromotionGroupInterface $promotionGroup): void
     {
         $action = $promotionGroup->getAction();
-        $this->getActionExecutor($action->getType())->execute($channelPricing, $action->getConfiguration(), $promotionGroup);
+
+        if (null !== $action) {
+            $this->getActionExecutor($action->getType())->execute($channelPricing, $action->getConfiguration(), $promotionGroup);
+        }
     }
 
     public function getActionExecutor(string $actionType): ActionExecutorInterface
