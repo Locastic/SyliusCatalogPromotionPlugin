@@ -14,13 +14,11 @@ use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicatorInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider;
-use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionGroupRepository;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
-use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 
 final class CatalogPromotionProcessor
 {

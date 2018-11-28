@@ -10,11 +10,6 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class CatalogPromotionGroupRepository extends EntityRepository implements CatalogPromotionGroupRepositoryInterface
 {
-    // select * From locastic_catalog_promotion_group inner join sylius_product
-    //          on sylius_product.catalog_promotion_group_id = locastic_catalog_promotion_group.id
-    // inner join locastic_catalog_promotion
-    //           on locastic_catalog_promotion.id = locastic_catalog_promotion_group.catalog_id
-    // where locastic_catalog_promotion.id = 1
     public function findByCatalogPromotion(CatalogPromotionInterface $catalogPromotion)
     {
         return $this->createQueryBuilder('cpg')

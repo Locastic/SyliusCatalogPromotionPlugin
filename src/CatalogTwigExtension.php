@@ -26,17 +26,8 @@ class CatalogTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('discountPercentage', [$this, 'calculateDiscountPercentage']),
             new TwigFunction('getProductsFromCatalog', [$this, 'getProductsFromCatalog']),
         ];
-    }
-
-    public function calculateDiscountPercentage(ChannelPricingInterface $channelPricing): string
-    {
-        $discountPrice = $channelPricing->getPrice();
-        $originalPrice = $channelPricing->getOriginalPrice();
-
-        return ceil(100 * (1 - ($discountPrice / $originalPrice))) . '%';
     }
 
     public function getProductsFromCatalog(CatalogPromotionInterface $catalogPromotion): Collection
