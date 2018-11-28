@@ -19,14 +19,11 @@ services:
 #providers
     locastic_sylius_catalog_promotion_plugin.provider.channel_pricing_provider:
         class: Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider
-        arguments:
-            - '@sylius.factory.channel_pricing'
-            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
 
     locastic_sylius_catalog_promotion_plugin.provider.catalog_promotion_provider:
         class: Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider
         arguments:
-            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion'
+            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion_group'
 
 #service_registries
     locastic_sylius_catalog_promotion_plugin.registry_promotion_action_executor:
@@ -49,6 +46,8 @@ services:
             - '@locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator'
             - '@sylius.manager.channel_pricing'
             - '@sylius.repository.channel_pricing'
+            - '@sylius.repository.product'
+            - '@locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion_group'
 
 #applicators
     locastic.sylius_catalog_promotion_plugin.promotion.action.applicator.catalog_promotion_applicator:
@@ -97,6 +96,8 @@ services:
 #twig_extensions
     locastic.sylius_catalog_promotion_plugin.catalog_twig_extension:
         class: Locastic\SyliusCatalogPromotionPlugin\CatalogTwigExtension
+        arguments:
+            - '@locastic_sylius_catalog_promotion_plugin.provider.catalog_promotion_provider'
         tags:
             - { name: twig.extension }
 

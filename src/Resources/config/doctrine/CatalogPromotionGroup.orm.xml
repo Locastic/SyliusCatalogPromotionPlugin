@@ -3,22 +3,21 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroup" table="locastic_catalog_promotion_group">
+    <mapped-superclass name="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroup" table="locastic_catalog_promotion_group">
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-
-        <field name="name" type="string" column="name" />
+        <field name="name" column="name"/>
         <many-to-one field="catalog" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotion" inversed-by="promotionGroups"/>
-        <one-to-many field="products" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\Product" mapped-by="appliedCatalogPromotionGroup">
-            <cascade>
-                <cascade-all/>
-            </cascade>
-        </one-to-many>
         <many-to-one field="action" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\PromotionAction" inversed-by="catalogPromotionGroups">
             <cascade>
                 <cascade-persist/>
             </cascade>
         </many-to-one>
-    </entity>
+        <one-to-many field="products" target-entity="Locastic\SyliusCatalogPromotionPlugin\Entity\ProductInterface" mapped-by="catalogPromotionGroup" fetch="EAGER">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+    </mapped-superclass>
 </doctrine-mapping>

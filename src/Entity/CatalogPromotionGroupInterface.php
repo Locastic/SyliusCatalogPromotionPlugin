@@ -19,11 +19,11 @@ interface CatalogPromotionGroupInterface extends ResourceInterface
 
     public function getProducts(): ?Collection;
 
-    public function addProduct(ProductInterface $productVariant): void;
+    public function addProduct(ProductInterface $product): void;
 
-    public function removeProduct(ProductInterface $productVariant): void;
+    public function removeProduct(ProductInterface $product): void;
 
-    public function hasProduct(ProductInterface $productVariant);
+    public function hasProduct(ProductInterface $product);
 
     public function getAction(): ?PromotionActionInterface;
 

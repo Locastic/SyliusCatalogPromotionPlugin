@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionGroupInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogPromotionInterface;
-use Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricingInterface;
+use Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogAwareChannelPricingInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Entity\ProductInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Promotion\Action\Applicator\CatalogPromotionApplicatorInterface;
 use Locastic\SyliusCatalogPromotionPlugin\Provider\CatalogPromotionProvider;
@@ -17,6 +17,7 @@ use Locastic\SyliusCatalogPromotionPlugin\Provider\ChannelPricingProvider;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\CatalogPromotionRepository;
 use Locastic\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepository;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
 final class CatalogPromotionProcessor
@@ -67,7 +68,7 @@ final class CatalogPromotionProcessor
     {
         $promotedChannelPricings = $this->channelPricingRepository->findAllWithAppliedCatalogPromotionsByChannel($channel);
 
-        /** @var ChannelPricingInterface $channelPricing */
+        /** @var ChannelPricingInterface|CatalogAwareChannelPricingInterface $channelPricing */
         foreach ($promotedChannelPricings as $channelPricing) {
             $catalogPrice = $channelPricing->getPrice();
             $previouslyAppliedCatalog = $channelPricing->getAppliedCatalogPromotion();
@@ -94,38 +95,39 @@ final class CatalogPromotionProcessor
         foreach ($activationTriggeredCatalogPromotions as $activationTriggeredCatalogPromotion) {
             $this->promoteCatalogGroups($activationTriggeredCatalogPromotion, $channel);
         }
+
         $this->channelPricingManager->flush();
 
         return $this->activatedChannelPricings;
     }
 
-    private function promoteCatalogGroups(CatalogPromotionInterface $catalogPromotion, ChannelInterface $channel)
+    private function promoteCatalogGroups(CatalogPromotionInterface $catalogPromotion, ChannelInterface $channel): void
     {
-        /** @var CatalogPromotionGroupInterface $promotionGroup */
-        foreach ($catalogPromotion->getPromotionGroups() as $promotionGroup) {
-            $catalogPromoGroupProducts = $promotionGroup->getProducts();
+        $catalogPromotionProducts = $this->catalogPromotionProvider->getProducts($catalogPromotion);
 
-            if (null === $catalogPromoGroupProducts) {
-                return;
-            }
-
-            /** @var ProductInterface $product */
-            foreach ($catalogPromoGroupProducts as $product) {
-                $this->promoteCatalogGroupProducts($product->getVariants(), $promotionGroup, $channel);
-            }
+        /** @var ProductInterface $product */
+        foreach ($catalogPromotionProducts as $product) {
+            $this->promoteProductVariants($product->getVariants(), $product, $channel);
         }
     }
 
-    private function promoteCatalogGroupProducts(Collection $promotedProductVariants, CatalogPromotionGroupInterface $promotionGroup, ChannelInterface $channel)
+    private function promoteProductVariants(Collection $promotedProductVariants, ProductInterface $product, ChannelInterface $channel): void
     {
         /** @var ProductVariantInterface $productVariant */
         foreach ($promotedProductVariants as $productVariant) {
             /** @var ChannelPricingInterface $channelPricing */
             $channelPricing = $this->channelPricingProvider->provideForProductVariant($channel, $productVariant);
 
-            $this->promotionApplicator->apply($channelPricing, $promotionGroup);
-            $this->activatedChannelPricings->add($channelPricing);
-            $this->channelPricingManager->persist($channelPricing);
+            /** @var CatalogPromotionGroupInterface */
+            $promotionGroup = $product->getCatalogPromotionGroup();
+
+            if (null !== $channelPricing && null !== $promotionGroup) {
+                $promotionGroup->addProduct($product);
+
+                $this->promotionApplicator->apply($channelPricing, $promotionGroup);
+                $this->activatedChannelPricings->add($channelPricing);
+                $this->channelPricingManager->persist($channelPricing);
+            }
         }
     }
 }

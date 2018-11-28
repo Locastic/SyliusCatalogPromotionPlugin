@@ -30,14 +30,8 @@ sylius_resource:
                 model: Locastic\SyliusCatalogPromotionPlugin\Entity\CatalogBannerImage
                 form: Locastic\SyliusCatalogPromotionPlugin\Form\Type\CatalogBannerImageType
 
-sylius_product:
-    resources:
-        product:
-            classes:
-                model: Locastic\SyliusCatalogPromotionPlugin\Entity\Product
 sylius_core:
     resources:
         channel_pricing:
             classes:
-                model: Locastic\SyliusCatalogPromotionPlugin\Entity\ChannelPricing
                 repository: Locastic\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepository
