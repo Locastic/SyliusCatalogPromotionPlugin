@@ -64,6 +64,8 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     {
         if (!$this->hasProduct($product)) {
             $this->products->add($product);
+
+            $product->setCatalogPromotionGroup($this);
         }
     }
 
@@ -71,6 +73,8 @@ class CatalogPromotionGroup implements CatalogPromotionGroupInterface
     {
         if ($this->hasProduct($product)) {
             $this->products->removeElement($product);
+
+            $product->setCatalogPromotionGroup(null);
         }
     }
 
