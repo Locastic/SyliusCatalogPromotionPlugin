@@ -54,6 +54,11 @@ class CatalogPromotion implements CatalogPromotionInterface, CodeAwareInterface,
         $this->addImage(new CatalogBannerImage());
     }
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     public function getId()
     {
         return $this->id;
