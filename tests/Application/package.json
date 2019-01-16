@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "dual-listbox": "^1.1.0",
     "jquery": "^3.2.0",
     "lightbox2": "^2.9.0",
     "npm": "^6.1.0",

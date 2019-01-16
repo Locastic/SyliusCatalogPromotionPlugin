@@ -25,7 +25,7 @@ locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_create:
                 method: createForCatalogPromotion
                 arguments:
                   - expr:notFoundOnNull(service('locastic_sylius_catalog_promotion_plugin.repository.catalog_promotion').find($catalogPromotionId))
-            template: "@SyliusAdmin/Crud/create.html.twig"
+            template: "@SyliusCatalogPromotionPlugin/CatalogPromotionGroup/Crud/create.html.twig"
             grid: locastic_sylius_catalog_promotion_plugin_catalog_promotion_group
             section: admin
             redirect:
@@ -45,7 +45,7 @@ locastic_sylius_catalog_promotion_plugin_admin_catalog_promotion_group_update:
     defaults:
         _controller: locastic_sylius_catalog_promotion_plugin.controller.catalog_promotion_group:updateAction
         _sylius:
-            template: "@SyliusAdmin/Crud/update.html.twig"
+            template: "@SyliusCatalogPromotionPlugin/CatalogPromotionGroup/Crud/update.html.twig"
             grid: locastic_sylius_catalog_promotion_plugin_catalog_promotion_group
             section: admin
             redirect:
