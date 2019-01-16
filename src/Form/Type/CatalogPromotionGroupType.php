@@ -44,7 +44,7 @@ class CatalogPromotionGroupType extends AbstractResourceType
                     return $product;
                 },
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
             ])
             ->add('actions', PromotionActionCollectionType::class, [
                 'label' => 'locastic.form.catalog.actions',
